@@ -7,7 +7,7 @@ function AppHandler(){
     // using a new variable called self because this looses context from 
     // time to time and no longer refers to the AppHandler object
     var self = this 
-    this.map = new GoogleMapHandler()
+    this.map = new GoogleMapsHandler()
     self.objects = {
         huts: [],
         campsites: [],
@@ -28,6 +28,8 @@ function AppHandler(){
                             data[i]['name'],
                             {lat: data[i]['latitude'], lng: data[i]['longitude']},
                             hutIconImageLocation,
+                            data[i]['altitude'],
+                            data[i]['capacity'],
                             data[i]['description'])
                         
                         hut.marker = self.map.addMarker({
@@ -125,9 +127,11 @@ function AppHandler(){
                             data[i]['lenght'],
                             data[i]['time'],
                             data[i]['description'])
+                        console.log(path)
                         path.polyline = self.map.addPolyline({
                             coordinates: path.coordinates,
-                            color: path.color
+                            color: path.color,
+                            content: path.content
                         })
 
                         self.objects[type].push(path)

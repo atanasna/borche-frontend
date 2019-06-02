@@ -1,8 +1,8 @@
 function Area(name,coordinates,color,description){
     this.id = id
     this.name = name
-    this.visible = true
+    this.poligon
     this.coordinates = coordinates
     this.color = color
-    content = "$(description)"
+    this.content = description
 }
