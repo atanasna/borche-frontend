@@ -127,7 +127,7 @@ function AppHandler(){
                             data[i]['lenght'],
                             data[i]['time'],
                             data[i]['description'])
-                        console.log(path)
+
                         path.polyline = self.map.addPolyline({
                             coordinates: path.coordinates,
                             color: path.color,
@@ -146,13 +146,24 @@ function AppHandler(){
 
     // Change Markers visibility
     this.hideObjects = function(type){
-        this.appHandler.objects[type].forEach(function(item){
-            item.marker.setVisible(false)
+        console.log(this)
+        this.objects[type].forEach(function(item){
+            if(type=="paths"){
+                item.polyline.setVisible(false)    
+            }
+            else{
+                item.marker.setVisible(false)
+            }
         })
     }
     this.showObjects = function(type){
-        this.appHandler.objects[type].forEach(function(item){
-            item.marker.setVisible(true)
+        this.objects[type].forEach(function(item){
+            if(type=="paths"){
+                item.polyline.setVisible(true)    
+            }
+            else{
+                item.marker.setVisible(true)
+            }
         })
     }
 }

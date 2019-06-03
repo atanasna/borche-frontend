@@ -6,7 +6,10 @@ function Path(id, name, coordinates, color, lenght, time){
     this.coordinates = coordinates
     this.polyline
     this.color = color
-    this.content = "time: " + Math.floor(this.time/60) + "h" + time%60 +"m" +
-        "<br>lenght: " + this.lenght + "km"
-    //this.content = "time: " this.time)<br>lenght: $(lenght)<br><br>$(description)"
+    this.content = "time: " + Math.floor(this.time/60) + "h" + time%60 +"m"
+        
+    if(this.lenght){
+        this.content += "<br>lenght: " + this.lenght + "km"
+    }
+
 }

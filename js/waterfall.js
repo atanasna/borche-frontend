@@ -5,7 +5,12 @@ function Waterfall(id,name,coordinates,iconImageLocation,height,description){
     this.height = height
     this.coordinates = coordinates
     this.iconImage = iconImageLocation
-    this.content = "<h3>" + this.name + "</h3>" + 
-        "<br>height: " + this.height + 
-        "<br>" + description
+    this.description = description
+    this.content = "<h3>" + this.name + "</h3>"
+    if(this.height){
+        this.content += "<br>height: <b>" + this.height +"m</b>"
+    }
+    if(this.description){
+        this.content += "<br>" + this.description
+    }
 }

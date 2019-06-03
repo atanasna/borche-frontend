@@ -3,7 +3,10 @@ function GoogleMapsHandler(){
         zoom:12,
         center: {lat: 42.723943, lng: 24.985956},
         //center: {lat: 37.772, lng: -122.214},
-        mapTypeId: 'roadmap'
+        mapTypeId: 'roadmap',
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false
     });
 
     this.addMarker = function addMarker(properties){

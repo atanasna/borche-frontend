@@ -6,8 +6,16 @@ function Hut(id, name, coordinates, iconImageLocation, altitude, capacity, descr
     this.marker
     this.coordinates = coordinates
     this.iconImage = iconImageLocation
-    this.content = "<h3>" + this.name + "</h3>" + 
-        "<br>altitude: " + this.altitude + 
-        "<br>capacity: " + this.capacity + 
-        "<br>" + description
+    this.description = description
+    this.content = "<h3>" + this.name + "</h3>"
+
+    if(this.altitude){
+        this.content += "<br>altitude: <b>" + this.altitude +"m</b>"
+    }
+    if(this.capacity){
+        this.content += "<br>capacity: <b>" + this.capacity + "</b>"
+    }
+    if(this.description){
+        this.content += "<br>" + description
+    }
 }

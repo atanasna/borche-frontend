@@ -4,6 +4,9 @@ function Campsite(id, name,coordinates,iconImageLocation,description){
     this.marker
     this.coordinates = coordinates
     this.iconImage = iconImageLocation
-    this.content = "<h3>" + this.name + "</h3>" +
-        "<br>" + description
+    this.description = description
+    this.content = "<h3>" + this.name + "</h3>"
+    if(this.description){
+        this.content += "<br>" + description
+    }
 }

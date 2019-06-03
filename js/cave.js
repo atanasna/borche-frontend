@@ -6,8 +6,15 @@ function Cave(id, name,coordinates,iconImageLocation,depth,lenght,description){
     this.lenght = lenght
     this.coordinates = coordinates
     this.iconImage = iconImageLocation
-    this.content = "<h3>" + this.name + "</h3>"+
-        "<br>depth: " + this.depth + 
-        "<br>lenght: " + this.lenght + 
-        "<br>" + description
+    this.description = this.description
+    this.content = "<h3>" + this.name + "</h3>"
+    if(this.depth){
+        this.content += "<br>depth: <b>" + this.depth +"m</b>"
+    }
+    if(this.lenght){
+        this.content += "<br>lenght: <b>" + this.lenght + "</b>"
+    }
+    if(this.description){
+        this.content += "<br>" + this.description
+    }
 }

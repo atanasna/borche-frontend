@@ -19,7 +19,6 @@ function init() {
   appHandler.loadObjects('http://borche-api.pentatope.co.uk/waterfalls',"waterfalls")
   appHandler.loadObjects('http://borche-api.pentatope.co.uk/paths','paths')
 
-  console.log(appHandler)
   //var options = {
   //  zoom:12,
   //  center: {lat: 42.723943, lng: 24.985956},
