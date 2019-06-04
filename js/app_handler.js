@@ -18,6 +18,7 @@ function AppHandler(){
         paths:[],
         areas: []
     }
+
     this.loadObjects = function(url,type){
         switch(type){
             case "huts":
@@ -39,8 +40,8 @@ function AppHandler(){
                             iconImage: hut.iconImage,
                             type: "hut",
                             id: hut.id,
-                            minorContent: hut.generateMinorInfoWindowContent(),
-                            majorContent: hut.generateMajorInfoWindowContent()
+                            minorContent: hut.minorInfoWindowContent(),
+                            majorContent: hut.majorInfoWindowContent()
                         })
 
                         self.objects[type].push(hut)
@@ -62,8 +63,9 @@ function AppHandler(){
                         campsite.marker = self.map.addMarker({
                             coordinates: campsite.coordinates,
                             iconImage: campsite.iconImage,
-                            minorContent: campsite.minorInfoWindowContent,
-                            majorContent: campsite.majorInfoWindowContent
+
+                            minorContent: campsite.minorInfoWindowContent(),
+                            majorContent: campsite.majorInfoWindowContent()
                         })
 
                         self.objects[type].push(campsite)
@@ -86,8 +88,8 @@ function AppHandler(){
                         cave.marker = self.map.addMarker({
                             coordinates: cave.coordinates,
                             iconImage: cave.iconImage,
-                            minorContent: cave.minorInfoWindowContent,
-                            majorContent: cave.majorInfoWindowContent
+                            minorContent: cave.minorInfoWindowContent(),
+                            majorContent: cave.majorInfoWindowContent()
                         })
                         self.objects[type].push(cave)
                     }
@@ -108,8 +110,8 @@ function AppHandler(){
                         wf.marker = self.map.addMarker({
                             coordinates: wf.coordinates,
                             iconImage: wf.iconImage,
-                            minorContent: wf.minorInfoWindowContent,
-                            majorContent: wf.majorInfoWindowContent
+                            minorContent: wf.minorInfoWindowContent(),
+                            majorContent: wf.majorInfoWindowContent()
                         })
 
                         self.objects[type].push(wf)
@@ -138,7 +140,7 @@ function AppHandler(){
                         path.polyline = self.map.addPolyline({
                             coordinates: path.coordinates,
                             color: path.color,
-                            content: path.content
+                            content: path.minorInfoWindowContent()
                         })
 
                         self.objects[type].push(path)
@@ -152,6 +154,9 @@ function AppHandler(){
     }
 
     // Change MapObjects visibility
+    this.toggleMapElements = function(type){
+
+    }
     this.hideObjects = function(type){
         this.objects[type].forEach(function(item){
             if(type=="paths"){
@@ -189,3 +194,11 @@ function AppHandler(){
           //load to main windo
     }
 }
+
+//class Application{
+//    constructor(){
+//        this.map = new GoogleMapsHandler()
+//        this.elements = null
+//
+//    }
+//}
