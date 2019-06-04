@@ -7,15 +7,17 @@ function AppHandler(){
     // using a new variable called self because this looses context from 
     // time to time and no longer refers to the AppHandler object
     var self = this 
+
     this.map = new GoogleMapsHandler()
+    
     self.objects = {
         huts: [],
         campsites: [],
         caves: [],
         waterfalls: [],
         paths:[],
-        areas: []}
-
+        areas: []
+    }
     this.loadObjects = function(url,type){
         switch(type){
             case "huts":
@@ -35,7 +37,10 @@ function AppHandler(){
                         hut.marker = self.map.addMarker({
                             coordinates: hut.coordinates,
                             iconImage: hut.iconImage,
-                            content: hut.content
+                            type: "hut",
+                            id: hut.id,
+                            minorContent: hut.generateMinorInfoWindowContent(),
+                            majorContent: hut.generateMajorInfoWindowContent()
                         })
 
                         self.objects[type].push(hut)
@@ -57,7 +62,8 @@ function AppHandler(){
                         campsite.marker = self.map.addMarker({
                             coordinates: campsite.coordinates,
                             iconImage: campsite.iconImage,
-                            content: campsite.content
+                            minorContent: campsite.minorInfoWindowContent,
+                            majorContent: campsite.majorInfoWindowContent
                         })
 
                         self.objects[type].push(campsite)
@@ -80,9 +86,9 @@ function AppHandler(){
                         cave.marker = self.map.addMarker({
                             coordinates: cave.coordinates,
                             iconImage: cave.iconImage,
-                            content: cave.content
+                            minorContent: cave.minorInfoWindowContent,
+                            majorContent: cave.majorInfoWindowContent
                         })
-
                         self.objects[type].push(cave)
                     }
                 })
@@ -102,7 +108,8 @@ function AppHandler(){
                         wf.marker = self.map.addMarker({
                             coordinates: wf.coordinates,
                             iconImage: wf.iconImage,
-                            content: wf.content
+                            minorContent: wf.minorInfoWindowContent,
+                            majorContent: wf.majorInfoWindowContent
                         })
 
                         self.objects[type].push(wf)
@@ -144,9 +151,8 @@ function AppHandler(){
         }
     }
 
-    // Change Markers visibility
+    // Change MapObjects visibility
     this.hideObjects = function(type){
-        console.log(this)
         this.objects[type].forEach(function(item){
             if(type=="paths"){
                 item.polyline.setVisible(false)    
@@ -165,5 +171,21 @@ function AppHandler(){
                 item.marker.setVisible(true)
             }
         })
+    }
+
+    //
+    this.showMainWindow = function(){
+        console.log("mainWindow to front")
+        document.querySelector("#main-window").style.zIndex = 40
+    }
+    this.hideMainWindow = function(){
+        console.log("mainWindow to back")
+        document.querySelector("#main-window").style.zIndex = 5
+    }
+
+    this.loadObjectInMainWindow = function(type, info){
+        //To be implemented
+          //fetch from backend
+          //load to main windo
     }
 }

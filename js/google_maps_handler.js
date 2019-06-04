@@ -15,19 +15,49 @@ function GoogleMapsHandler(){
           map: this.map
         });
 
+        //Major contains A lot of info and only apears on mouse click
+        marker.majorInfoWindow = new google.maps.InfoWindow({
+            content: properties.majorContent
+          });
+        //Minor contains less info and only apears on mouse over
+        marker.minorInfoWindow = new google.maps.InfoWindow({
+            content: properties.minorContent
+          });
+
         if(properties.iconImage){
           marker.setIcon(properties.iconImage)
         }
-        if(properties.content){
-          var infoWindow = new google.maps.InfoWindow({
-            content: properties.content
-          });
 
-          marker.addListener('click', function(){
-            infoWindow.open(this.map,marker);
-          });
-        }
+        //EVENTS
+          // On CLICK infobox
+            if(properties.majorContent){
+              marker.addListener('click', function(){
+                if(marker.majorInfoWindow.map == null){
+                  marker.majorInfoWindow.open(this.map,marker)
+                  var more_button = properties.majorContent.querySelector(".more-button")
 
+                  more_button.addEventListener('click', function(){
+                    appHandler.showMainWindow()
+                  });
+                  
+                  marker.minorInfoWindow.close()
+                }
+                else{
+                  marker.majorInfoWindow.close();
+                }
+              });
+            }
+          // On HOVER infobox
+            if(properties.minorContent){
+              marker.addListener('mouseover', function() {
+                if(marker.majorInfoWindow.map == null){
+                  marker.minorInfoWindow.open(this.map,marker)
+                }
+              });
+              marker.addListener('mouseout', function() {
+                marker.minorInfoWindow.close()
+              });
+            }
         return marker
     }
 
@@ -42,17 +72,40 @@ function GoogleMapsHandler(){
 
         polyline.setMap(this.map)
 
-        if(properties.content){
-          google.maps.event.addListener(polyline, 'click', function(event) {
-            var infoWindow = new google.maps.InfoWindow({
-              content: properties.content,
-              position: event.latLng
-            });
+        polyline.majorInfoWindow = new google.maps.InfoWindow({
+          content: properties.content,
+        });
+        polyline.minorInfoWindow = new google.maps.InfoWindow({
+          content: properties.content,
+        });
 
-            infoWindow.open(this.map)
+        if(properties.content){
+          // On CLICK infobox
+          google.maps.event.addListener(polyline, 'click', function(event) {
+            polyline.majorInfoWindow.close()
+            polyline.majorInfoWindow.setPosition(event.latLng);
+            polyline.majorInfoWindow.open(this.map)
+            polyline.minorInfoWindow.close()
+          });
+
+          // On HOVER infobox
+          google.maps.event.addListener(polyline, 'mouseover', function(event){
+            if(polyline.majorInfoWindow.map == null){
+              polyline.minorInfoWindow.setPosition(event.latLng);
+              polyline.minorInfoWindow.open(this.map)
+            }
+          });
+          google.maps.event.addListener(polyline, 'mouseout', function(event) {
+            polyline.minorInfoWindow.close()
           });
         }
         
         return polyline
     }
+}
+
+//Helpers
+function isInfoWindowOpen(infoWindow){
+    var map = infoWindow.getMap();
+    return (map !== null && typeof map !== "undefined");
 }

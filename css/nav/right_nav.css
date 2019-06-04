@@ -1,0 +1,17 @@
+.right-nav{
+  z-index: 20;
+  position: absolute;
+  background-color: white;
+  opacity: 0.9;
+  top: 15px;
+  right: 15px;
+  padding-top: 15px;
+  padding-left: 5px;
+  padding-bottom: 15px;
+  padding-right: 5px;
+  border-radius: 10px;
+}
+
+.right-nav-button {
+   margin:5px 5px;
+}

@@ -5,15 +5,19 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link href="css/styles.css" rel="stylesheet">
-    <link href="css/nav.css" rel="stylesheet">
-    <link href="css/hamburgers.css" rel="stylesheet">
+    <link href="css/nav/left_nav.css" rel="stylesheet">
+    <link href="css/nav/right_nav.css" rel="stylesheet">
+    <link href="css/nav/hamburgers.css" rel="stylesheet">
+    <link href="css/map/map.css" rel="stylesheet">
+    <link href="css/map/info_boxes.css" rel="stylesheet">
     <link href="css/loading.css" rel="stylesheet">
   </head>
   <body>
+
     <div id="loading-container">
       <img id="loading-image" src="resources/load3.gif">
     </div>
-
+    
     <div class="left-nav-hamburger">
         <div class="hamburger">
           <div class="hamburger-box">
@@ -23,38 +27,37 @@
     </div>
 
     <div class="left-nav">
+      <div class="left-nav-button left-nav-back">Hide</div>
       <img class="left-nav-logo" src="resources/logo-s.png">
-      <div class="left-nav-button">do something 1</div>
-      <div class="left-nav-button">do something 2</div>
-      <div class="left-nav-button">do something 3</div>
-      <div class="left-nav-button">do something 4</div>
-      <div class="left-nav-button">do something 5</div>
-      <div class="left-nav-button left-nav-back">BACK</div>
+      <div class="left-nav-button left-nav-add-element">Add Element</div>
+      <div class="left-nav-button left-nav-idea">The Big Idea</div>
+      <div class="left-nav-button left-nav-donate">Donate</div>
+      <div class="left-nav-button left-nav-contacts">Contacts</div>
     </div>
-
-    
 
     <div class="right-nav">
-      <div class="right-nav-button toggle-huts"><img src="resources/icons/hut32.png"></div>
-      <div class="right-nav-button toggle-caves"><img src="resources/icons/cave32.png"></div>
-      <div class="right-nav-button toggle-campsites"><img src="resources/icons/campsite32.png"></div>
-      <div class="right-nav-button toggle-waterfalls"><img src="resources/icons/waterfall32.png"></div>
-      <div class="right-nav-button toggle-paths"><img src="resources/icons/mountain32.png"></div>
+      <div class="right-nav-button right-nav-huts"><img src="resources/icons/hut32.png"></div>
+      <div class="right-nav-button right-nav-campsites"><img src="resources/icons/campsite32.png"></div>
+      <div class="right-nav-button right-nav-caves"><img src="resources/icons/cave32.png"></div>
+      <div class="right-nav-button right-nav-waterfalls"><img src="resources/icons/waterfall32.png"></div>
+      <div class="right-nav-button right-nav-paths"><img src="resources/icons/path32.png"></div>
     </div>
 
+    <div id="main-window"></div>
     <div id="map"></div>
+
     <script src="js/loadingscreen.js"></script>
-    <script src="js/navigation.js"></script>
+    <script src="js/nav/left_nav.js"></script>
+    <script src="js/nav/right_nav.js"></script>
     <script src="js/init.js"></script>
-    <script src="js/hut.js"></script>
-    <script src="js/campsite.js"></script>
-    <script src="js/cave.js"></script>
-    <script src="js/waterfall.js"></script>
-    <script src="js/path.js"></script>
-    <script src="js/area.js"></script>
+    <script src="js/map_elements/hut.js"></script>
+    <script src="js/map_elements/campsite.js"></script>
+    <script src="js/map_elements/cave.js"></script>
+    <script src="js/map_elements/waterfall.js"></script>
+    <script src="js/map_elements/path.js"></script>
+    <script src="js/map_elements/area.js"></script>
     <script src="js/app_handler.js"></script>
     <script src="js/google_maps_handler.js"></script>
-
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi4BTxWpALqxuGC3ZlRYm1E5bL5WL8u3A&callback=init" async defer>
     </script>
   </body>
