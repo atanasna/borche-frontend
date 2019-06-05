@@ -11,13 +11,16 @@ var mapObjects = {
 function init() {
   // Initializa the Map
 
-  appHandler = new AppHandler()
-  //sleep(500);
-  appHandler.loadObjects('http://borche-api.pentatope.co.uk/huts',"huts")
-  appHandler.loadObjects('http://borche-api.pentatope.co.uk/campsites',"campsites")
-  appHandler.loadObjects('http://borche-api.pentatope.co.uk/caves',"caves")
-  appHandler.loadObjects('http://borche-api.pentatope.co.uk/waterfalls',"waterfalls")
-  appHandler.loadObjects('http://borche-api.pentatope.co.uk/paths','paths')
-  
+  app = new Application()
+  app.loadMapElements(fetch_huts_url,"huts").then(
+    function(){app.drawMapElements("huts")})
+  app.loadMapElements(fetch_campsites_url,"campsites").then(
+    function(){app.drawMapElements("campsites")})
+  app.loadMapElements(fetch_caves_url,"caves").then(
+    function(){app.drawMapElements("caves")})
+  app.loadMapElements(fetch_waterfalls_url,"waterfalls").then(
+    function(){app.drawMapElements("waterfalls")})
+  app.loadMapElements(fetch_paths_url,'paths').then(
+    function(){app.drawMapElements("paths")})
 }
 

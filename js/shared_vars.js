@@ -1,0 +1,10 @@
+var hutIconImageLocation = "resources/icons/hut32.png"
+var campsiteIconImageLocation = "resources/icons/campsite32.png"
+var caveIconImageLocation = "resources/icons/cave32.png"
+var waterfallIconImageLocation = "resources/icons/waterfall32.png"
+
+var fetch_huts_url = "http://borche-api.pentatope.co.uk/huts"
+var fetch_campsites_url = "http://borche-api.pentatope.co.uk/campsites"
+var fetch_caves_url = "http://borche-api.pentatope.co.uk/caves"
+var fetch_waterfalls_url = "http://borche-api.pentatope.co.uk/waterfalls"
+var fetch_paths_url = "http://borche-api.pentatope.co.uk/paths"

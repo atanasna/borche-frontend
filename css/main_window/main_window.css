@@ -1,0 +1,36 @@
+#main-window{
+    z-index: 5;
+    border-radius: 10px;
+    position: absolute;
+    right:80px;
+    top:15px;
+    bottom:20px;
+    max-width:45%;
+
+    background-color: white;
+    opacity: 0.9;
+}
+.main-cross{
+    cursor: pointer;
+    position: absolute;
+    right:10px;
+    top:10px;
+}
+.main-container{
+    margin:auto;
+    padding:30px 30px;
+}
+
+.main-title{
+    padding-bottom: 10px;
+    font-family: "Museo";
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.main-content{
+    padding-top: 20px;
+    padding-bottom: 15px;
+    font-family: "Museo";
+    font-size: 14px;
+}

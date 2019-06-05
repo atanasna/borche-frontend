@@ -19,7 +19,7 @@ class Hut extends BasicMapElement {
                 ${ this.capacity ?`
                     <br>
                     <div class='info-box-attribute-label'>capacity: </div>
-                    <div class='info-box-attribute-value'>${this.capacity}m</div>` : ``
+                    <div class='info-box-attribute-value'>${this.capacity}</div>` : ``
                 }
             </div>
             <div class='major-info-box-button'>

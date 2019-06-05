@@ -1,18 +1,19 @@
 .info-box-container{
     display: inline-block;
+    font-family: Museo;
 }
 
 .minor-info-box-title{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
 }
 .info-box-attribute-label{
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
 }
 .info-box-attribute-value{
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
 }
 

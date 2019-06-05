@@ -1,0 +1,3 @@
+class Monastery extends BasicMapElement {
+    
+}

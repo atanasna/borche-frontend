@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>PineTree</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link href="css/styles.css" rel="stylesheet">
@@ -11,6 +11,7 @@
     <link href="css/map/map.css" rel="stylesheet">
     <link href="css/map/info_boxes.css" rel="stylesheet">
     <link href="css/loading.css" rel="stylesheet">
+    <link href="css/main_window/main_window.css" rel="stylesheet">
   </head>
   <body>
 
@@ -29,9 +30,11 @@
     <div class="left-nav">
       <div class="left-nav-button left-nav-back">Hide</div>
       <img class="left-nav-logo" src="resources/logo-s.png">
-      <div class="left-nav-button left-nav-add-element">Add Element</div>
-      <div class="left-nav-button left-nav-idea">The Big Idea</div>
+      <div class="left-nav-button left-nav-mission">Our Mission</div>
+      <div class="left-nav-button left-nav-team">Team</div>
+      <div class="left-nav-button left-nav-help">How to Help</div>
       <div class="left-nav-button left-nav-donate">Donate</div>
+      <div class="left-nav-button left-nav-partners">Partners</div>
       <div class="left-nav-button left-nav-contacts">Contacts</div>
     </div>
 
@@ -43,13 +46,21 @@
       <div class="right-nav-button right-nav-paths"><img src="resources/icons/path32.png"></div>
     </div>
 
-    <div id="main-window"></div>
+    <div id="main-window">
+      <div class="main-cross">
+        <img src="resources/icons/nav/cross16.png">
+      </div>
+      <div class="main-container">
+      </div> 
+    </div>
     <div id="map"></div>
 
     <script src="js/loadingscreen.js"></script>
     <script src="js/nav/left_nav.js"></script>
     <script src="js/nav/right_nav.js"></script>
     <script src="js/init.js"></script>
+    <script src="js/shared_vars.js"></script>
+    <script src="js/main_window.js"></script>
     <script src="js/map_elements/BasicMapElement.js"></script>
     <script src="js/map_elements/Hut.js"></script>
     <script src="js/map_elements/Campsite.js"></script>
@@ -57,8 +68,8 @@
     <script src="js/map_elements/Waterfall.js"></script>
     <script src="js/map_elements/Path.js"></script>
     <script src="js/map_elements/Area.js"></script>
-    <script src="js/app_handler.js"></script>
-    <script src="js/google_maps_handler.js"></script>
+    <script src="js/Application.js"></script>
+    <script src="js/MapsHandler.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi4BTxWpALqxuGC3ZlRYm1E5bL5WL8u3A&callback=init" async defer>
     </script>
   </body>
