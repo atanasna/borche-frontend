@@ -7,19 +7,24 @@
   opacity: 1;
 }
 .left-nav-button{
+  cursor: pointer;
   display:block;
   width: 170px;
   height: 20px;
   margin-left:auto;
   margin-right:auto;
   margin-top: 5px;
-  background-color: #279f94;
+  background-color: var(--sea-green-3);
   padding-left:15px;
   padding-right:5px;
   padding-top:10px;
+  padding-bottom:10px;
   color: white;
   border-radius: 2px;
   font-family: Museo;
+}
+.left-nav-button:hover{
+  background-color: var(--sea-green-1);
 }
 .left-nav-logo{
   display:block;

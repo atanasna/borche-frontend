@@ -1,20 +1,20 @@
 class Campsite extends BasicMapElement {
-    constructor(id,name,coordinates,iconImageLocation,description){
-        super(id,name,coordinates,iconImageLocation,description);
+    constructor(id,name,coordinates,approved,description){
+        super(id,name,coordinates,approved,description);
         this.marker = null
+        if(approved){
+            this.iconImage = campsiteIconUrl    
+        }
+        else{
+            this.iconImage = campsiteGrayIconUrl 
+        }
     }
 
-    majorInfoWindowContent(){
-        var container = document.createElement('div');
-        container.innerHTML = `
-            <div class='info-box-container'>
-                <div class='major-info-box-title'>${this.name}</div> 
-            </div>
-            <div class='major-info-box-button'>
-                <img class='more-button' src='resources/icons/nav/arrow-sqeezed32h.png'>
-            </div>
-        `
-        return container
+    isValid(){
+        return super.isValid()
+    }
+    toJson(){
+        return super.toJson()
     }
 }
 //

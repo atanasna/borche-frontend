@@ -5,7 +5,8 @@
     right:80px;
     top:15px;
     bottom:20px;
-    max-width:45%;
+    max-width:40%;
+    min-width:30%;
 
     background-color: white;
     opacity: 0.9;
@@ -33,4 +34,10 @@
     padding-bottom: 15px;
     font-family: "Museo";
     font-size: 14px;
+}
+
+.main-title select {
+    font-family: "Museo";
+    font-size: 40px;
+  
 }

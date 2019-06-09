@@ -1,32 +1,40 @@
 class Hut extends BasicMapElement {
-    constructor(id, name, coordinates, iconImageLocation, altitude, capacity, description){
-        super(id,name,coordinates,iconImageLocation,description);
+    constructor(id, name, coordinates, approved, altitude, capacity, description){
+        super(id,name,coordinates,approved,description);
         this.marker = null
+        if(approved){
+            this.iconImage = hutIconUrl    
+        }
+        else{
+            this.iconImage = hutGrayIconUrl 
+        }
         this.altitude = altitude
         this.capacity = capacity
-
     }
 
-    majorInfoWindowContent(){
-        var container = document.createElement('div');
-        container.innerHTML = `
-            <div class='info-box-container'>
-                <div class='major-info-box-title'>${this.name}</div> 
-                ${ this.altitude ?`
-                    <div class='info-box-attribute-label'>altitude: </div>
-                    <div class='info-box-attribute-value'>${this.altitude}m</div>` : ``
-                }
-                ${ this.capacity ?`
-                    <br>
-                    <div class='info-box-attribute-label'>capacity: </div>
-                    <div class='info-box-attribute-value'>${this.capacity}</div>` : ``
-                }
-            </div>
-            <div class='major-info-box-button'>
-                <img class='more-button' src='resources/icons/nav/arrow-sqeezed32h.png'>
-            </div>
-        `
-        return container
+    isValid(){
+        var result = super.isValid()
+        if (this.altitude != null){
+            if(this.altitude <= 0 || typeof(this.altitude)!="number" )
+                {
+                result.code = false
+                result.errors.push("Altitude must be positive number")
+            }
+        }
+        if (this.capacity != null){
+            if(this.capacity <= 0 || typeof(this.capacity)!="number" )
+                {
+                result.code = false
+                result.errors.push("Capacity must be positive number")
+            }
+        }
+        return result  
+    }
+
+    toJson(){
+        let json = super.toJson()
+        json.altitude = this.altitude
+        json.capacity = this.capacity
+        return json
     }
 }
-//

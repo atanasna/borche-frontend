@@ -1,190 +1,88 @@
 class Application{
     constructor(){
         this.map = new MapsHandler()
-        this.elements = {}
+        this.htmlBuilder = new HtmlBuilder()
+        this.backendConnector = new BackendConnector()
+        this.eventsHandler = new EventsHandler()
+        this.layers = {}
+
+        this.eventsHandler.attachInitialListeners()
     }
 
-    loadMapElements(url,type){
+    // Loads all elements of the particular time in the elemnts hash
+    loadMapElements(type){
         var self = this
         //Create new array if there is none
-        if(this.elements[type]==null){
-            this.elements[type] = []
+        if(this.layers[type]==null){
+            this.layers[type]={},
+            this.layers[type].visible = true,
+            this.layers[type].elements = []
         }
 
-        return fetch(url,{mode: 'cors'})
-        .then( response => response.json() )
-        .then( function(data){
-            for (var i = 0; i<data.length; i++){
-                if(type == "huts"){
-                    var hut = new Hut(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        hutIconImageLocation,
-                        data[i]['altitude'],
-                        data[i]['capacity'],
-                        data[i]['description'])
-                    self.elements[type].push(hut)
-                }
-                if(type == "campsites"){
-                    var campsite = new Campsite(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        campsiteIconImageLocation,
-                        data[i]['description'])
-                    self.elements[type].push(campsite)
-                }
-                if(type == "caves"){
-                    var cave = new Cave(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        caveIconImageLocation,
-                        data[i]['depth'],
-                        data[i]['lenght'],
-                        data[i]['description'])
-                    self.elements[type].push(cave)
-                }
-                if(type == "waterfalls"){
-                    var wf = new Waterfall(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        waterfallIconImageLocation,
-                        data[i]['height'],
-                        data[i]['description'])
-                    self.elements[type].push(wf)
-                }
-                if(type == "paths"){
-                    var coordinates = []
-                    for (var j = 0; j<data[i]['latitudes'].length; j++){
-                        coordinates.push({lat:data[i]['latitudes'][j], lng:data[i]['longitudes'][j]})
-                    }
-
-                    var path = new Path(
-                        data[i]['id'],
-                        data[i]['name'],
-                        coordinates,
-                        data[i]['color'],
-                        data[i]['lenght'],
-                        data[i]['time'],
-                        data[i]['description']) 
-                    self.elements[type].push(path)   
-                }
-            }
-        })
+        return this.backendConnector.getMapElements(type)
+            .then( function(elements){
+                self.layers[type].elements = elements
+            })
     }
+    // Creates a map marker for all elements of type:type and attaches proper Listeners
     drawMapElements(type){
         var self = this
-        this.elements[type].forEach(function(element){
-            if(type == "huts"){
-                element.marker = self.map.addMarker({
-                    id: element.id,
-                    type: "huts",
-                    coordinates: element.coordinates,
-                    iconImage: element.iconImage,
-                    minorContent: element.minorInfoWindowContent(),
-                    majorContent: element.majorInfoWindowContent(),
-                    blabla: "nasko"
-                })
-            }
-            if(type == "campsites"){
-                element.marker = self.map.addMarker({
-                    id: element.id,
-                    type:"campsites",
-                    coordinates: element.coordinates,
-                    iconImage: element.iconImage,
-                    minorContent: element.minorInfoWindowContent(),
-                    majorContent: element.majorInfoWindowContent()
-                })
-            }
-            if(type == "caves"){
-                element.marker = self.map.addMarker({
-                    id: element.id,
-                    type:"caves",
-                    coordinates: element.coordinates,
-                    iconImage: element.iconImage,
-                    minorContent: element.minorInfoWindowContent(),
-                    majorContent: element.majorInfoWindowContent()
-                })
-            }
-            if(type == "waterfalls"){
-                element.marker = self.map.addMarker({
-                    id: element.id,
-                    type:"waterfalls",
-                    coordinates: element.coordinates,
-                    iconImage: element.iconImage,
-                    minorContent: element.minorInfoWindowContent(),
-                    majorContent: element.majorInfoWindowContent()
-                })
-            }
+        this.layers[type].elements.forEach(function(element){
             if(type == "paths"){
                 element.polyline = self.map.addPolyline({
                     coordinates: element.coordinates,
                     color: element.color,
-                    content: element.minorInfoWindowContent()
+                    content: self.htmlBuilder.mapElementMinorInfo(element,type)
+                })
+            }
+            else{
+                element.marker = self.map.addMarker({
+                    id: element.id,
+                    type: type,
+                    coordinates: element.coordinates,
+                    iconImage: element.iconImage,
+                    minorContent: self.htmlBuilder.mapElementMinorInfo(element,type),
+                    majorContent: self.htmlBuilder.mapElementMajorInfo(element,type)
                 })
             }
         });    
     }
-    presentElementInMainWindow(id,type){
+    // Show the element on the main Window of the app
+    showMapElement(id,type){
         var self = this
-        var url = null
-        if (type=="huts"){
-            url = fetch_huts_url
-        }
-        if (type=="campsites"){
-            url = fetch_campsites_url
-        }
-        if (type=="caves"){
-            url = fetch_caves_url
-        }
-        if (type=="waterfalls"){
-            url = fetch_waterfalls_url
-        }
-        url += `/${id}`
+        var element
 
-        console.log(url)
-        fetch(url,{mode: 'cors'})
-        .then( response => response.json() )
-        .then( function(data){
-            var mainWindow = self.getMainWindowContainer()
-            mainWindow.innerHTML = `
-              <div class="main-title">${data.general.name}</div>
-              <hr>
-              <div class="main-content">
-                id:${data.general.id}<br>
-                lat:${data.general.latitude},lng:${data.general.longitude}<br> 
-                score:${data.score}<br>
-              </div>
-            `
+        this.backendConnector.getMapElement(id,type)
+        .then(function(result){
+            element = result
+        }).then( function(){
+            var container = self.getMainWindowContainer()
+            container.innerHTML = self.htmlBuilder.mapElementShow(element,type)
             self.showMainWindow()
         })
     }
-    toggleMapElements(type){
-
-    }
 
     hideObjects(type){
-      this.elements[type].forEach(function(item){
-          if(type=="paths"){
-              item.polyline.setVisible(false)    
-          }
-          else{
-              item.marker.setVisible(false)
-          }
-      })
+        this.layers[type].elements.forEach(function(item){
+            if(type=="paths"){
+                item.polyline.setVisible(false)    
+            }
+            else{
+                item.marker.setVisible(false)
+            }
+        })
+        this.layers[type].visible = false
     }
     showObjects(type){
-      this.elements[type].forEach(function(item){
-          if(type=="paths"){
-              item.polyline.setVisible(true)    
-          }
-          else{
-              item.marker.setVisible(true)
-          }
-      })
+        this.layers[type].elements.forEach(function(item){
+            if(type=="paths"){
+                item.polyline.setVisible(true)    
+            }
+            else{
+                item.marker.setVisible(true)
+            }
+        })
+        this.layers[type].visible = true
     }
     showMainWindow(){
         console.log("mainWindow to front")

@@ -1,0 +1,13 @@
+.form-label{
+    padding-right: 10px
+    padding-bottom: 15px;
+    height:30px;
+    display: inline-block;
+    width:100px;
+}
+.form-imput{
+    padding-right: 10px
+    height:40px;
+    display: inline-block;
+    width:200px;
+}

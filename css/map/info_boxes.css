@@ -1,6 +1,7 @@
 .info-box-container{
     display: inline-block;
     font-family: Museo;
+    vertical-align: middle;
 }
 
 .minor-info-box-title{
@@ -24,6 +25,7 @@
 .major-info-box-button{
     display: inline-block;
     padding-left:10px;
+    vertical-align: middle;
 }
 .more-button{
     cursor: pointer;

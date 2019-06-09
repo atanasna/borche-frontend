@@ -1,31 +1,41 @@
 class Cave extends BasicMapElement {
-    constructor(id,name,coordinates,iconImageLocation,depth,lenght,description){
-        super(id,name,coordinates,iconImageLocation,description);
+    constructor(id,name,coordinates,approved,depth,lenght,description){
+        super(id,name,coordinates,approved,description);
         this.marker = null
         this.depth = depth
         this.lenght = lenght
+        if(approved){
+            this.iconImage = caveIconUrl    
+        }
+        else{
+            this.iconImage = caveGrayIconUrl 
+        }
     }
 
-    majorInfoWindowContent(){
-        var container = document.createElement('div');
-        container.innerHTML = `
-            <div class='info-box-container'>
-                <div class='major-info-box-title'>${this.name}</div> 
-                ${ this.depth ?`
-                    <div class='info-box-attribute-label'>depth: </div>
-                    <div class='info-box-attribute-value'>${this.depth}m</div>` : ``
-                }
-                ${ this.lenght ?`
-                    <br>
-                    <div class='info-box-attribute-label'>lenght: </div>
-                    <div class='info-box-attribute-value'>${this.lenght}m</div>` : ``
-                }
-            </div>
-            <div class='major-info-box-button'>
-                <img class='more-button' src='resources/icons/nav/arrow-sqeezed32h.png'>
-            </div>
-        `
-        return container
+    isValid(){
+        var result = super.isValid()
+        if (this.depth != null){
+            if(this.depth <= 0 || typeof(this.depth)!="number" )
+                {
+                result.code = false
+                result.errors.push("Depth must be positive number")
+            }
+        }
+        if (this.lenght != null){
+            if(this.lenght <= 0 || typeof(this.lenght)!="number" )
+                {
+                result.code = false
+                result.errors.push("Lenght must be positive number")
+            }
+        }
+        return result  
+    }
+
+    toJson(){
+        let json = super.toJson()
+        json.depth = this.depth
+        json.length = this.length
+        return json
     }
 }
 //

@@ -7,7 +7,8 @@ class MapsHandler{
         mapTypeId: 'roadmap',
         mapTypeControl: false,
         streetViewControl: false,
-        fullscreenControl: false
+        fullscreenControl: false,
+        zoomControl: false
     });
   }
 
@@ -38,7 +39,7 @@ class MapsHandler{
               marker.majorInfoWindow.open(this.map,marker)
               var more_button = properties.majorContent.querySelector(".more-button")
               more_button.addEventListener('click', function(){
-                app.presentElementInMainWindow(properties.id,properties.type)
+                app.showMapElement(properties.id,properties.type)
               });
               
               marker.minorInfoWindow.close()
