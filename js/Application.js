@@ -9,14 +9,13 @@ class Application{
         this.layers = {}
     }
 
-    // Loads all elements of the particular time in the elemnts hash
+    // Loads all elements of the particular time in the elements hash
     loadMapElements(type){
         var self = this
         //Create new array if there is none
         if(this.layers[type]==null){
             this.layers[type]={},
-            this.layers[type].visible = true,
-            this.layers[type].elements = []
+            this.layers[type] = new Layer(type)
         }
 
         return this.backendConnector.getMapElements(type)
@@ -64,28 +63,6 @@ class Application{
         })
     }
 
-    hideObjects(type){
-        this.layers[type].elements.forEach(function(item){
-            if(type=="path"){
-                item.polyline.setVisible(false)    
-            }
-            else{
-                item.marker.setVisible(false)
-            }
-        })
-        this.layers[type].visible = false
-    }
-    showObjects(type){
-        this.layers[type].elements.forEach(function(item){
-            if(type=="path"){
-                item.polyline.setVisible(true)    
-            }
-            else{
-                item.marker.setVisible(true)
-            }
-        })
-        this.layers[type].visible = true
-    }
     showMainWindow(){
         console.log("mainWindow to front")
         document.querySelector("#main-window").style.zIndex = 40

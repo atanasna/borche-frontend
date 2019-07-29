@@ -10,11 +10,11 @@ class Filter extends BasicTool{
         this.button.addEventListener("click", function(){
             if(app.layers[type].visible){
                 self.button.innerHTML  = `<img src=${iconOffUrl}>`
-                app.hideObjects(type)
+                app.layers[type].setVisibility(false)
             }
             else{
                 self.button.innerHTML = `<img src=${iconOnUrl}>`
-                app.showObjects(type)
+               app.layers[type].setVisibility(true)
             }
         })
     }

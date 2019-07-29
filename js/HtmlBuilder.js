@@ -6,38 +6,38 @@ class HtmlBuilder{
     // MAP ELEMENTS
         mapElementMinorInfo(element,type){
             var container 
-            if(type=="huts"){ container = this.sharedMinorInfo(element)}
-            if(type=="caves"){ container = this.sharedMinorInfo(element)}
-            if(type=="campsites"){ container = this.sharedMinorInfo(element)}
-            if(type=="waterfalls"){ container = this.sharedMinorInfo(element)}
-            if(type=="paths"){ container = this.pathMinorInfo(element)}    
+            if(type=="hut"){ container = this.sharedMinorInfo(element)}
+            if(type=="cave"){ container = this.sharedMinorInfo(element)}
+            if(type=="campsite"){ container = this.sharedMinorInfo(element)}
+            if(type=="waterfall"){ container = this.sharedMinorInfo(element)}
+            if(type=="path"){ container = this.pathMinorInfo(element)}    
             return container
         }
         mapElementMajorInfo(element,type){
             var container 
-            if(type=="huts"){ container = this.hutMajorInfo(element)}
-            if(type=="caves"){ container = this.caveMajorInfo(element)}
-            if(type=="campsites"){ container = this.campsiteMajorInfo(element)}
-            if(type=="waterfalls"){ container = this.waterfallMajorInfo(element)}
+            if(type=="hut"){ container = this.hutMajorInfo(element)}
+            if(type=="cave"){ container = this.caveMajorInfo(element)}
+            if(type=="campsite"){ container = this.campsiteMajorInfo(element)}
+            if(type=="waterfall"){ container = this.waterfallMajorInfo(element)}
             return container
         }
         mapElementShow(element,type){
             var container 
-            if(type=="huts"){ container = this.hutShow(element)}
-            if(type=="caves"){ container = this.caveShow(element)}
-            if(type=="campsites"){ container = this.campsiteShow(element)}
-            if(type=="waterfalls"){ container = this.waterfallShow(element)}
+            if(type=="hut"){ container = this.hutShow(element)}
+            if(type=="cave"){ container = this.caveShow(element)}
+            if(type=="campsite"){ container = this.campsiteShow(element)}
+            if(type=="waterfall"){ container = this.waterfallShow(element)}
             return container
         }
         mapElementAdd(type){
             var container = `
                 <div class="main-title">Add new 
                     <select class="add-element-select">
-                        <option value="huts" selected disabled hidden>What?</option>
-                        <option value="huts" ${ type=="huts" ?`selected`:``} >Hut</option>
-                        <option value="caves" ${ type=="caves" ?`selected`:``} >Cave</option>
-                        <option value="waterfalls" ${ type=="waterfalls" ?`selected`:``} >Waterfall</option>
-                        <option value="campsites" ${ type=="campsites" ?`selected`:``} >Campsite</option>
+                        <option value="hut" selected disabled hidden>What?</option>
+                        <option value="hut" ${ type=="hut" ?`selected`:``} >Hut</option>
+                        <option value="cave" ${ type=="cave" ?`selected`:``} >Cave</option>
+                        <option value="waterfall" ${ type=="waterfall" ?`selected`:``} >Waterfall</option>
+                        <option value="campsite" ${ type=="campsite" ?`selected`:``} >Campsite</option>
                     </select>
                 </div>
                 <hr>
@@ -50,23 +50,23 @@ class HtmlBuilder{
                         <input class="map-element-latitude" type="number" step="0.00001" placeholder="Latitude*" />
                         <input class="map-element-longitude" type="number" step="0.00001" placeholder="Longitude*" />
                         <br>
-                        ${ type=="huts" ?`
+                        ${ type=="hut" ?`
                             <input class="hut-altitude" type="number" placeholder="Altitude" />
                             <br>
                             <input class="hut-capacity" type="number" placeholder="Capacity" />
                             <br>` : ``
                         }
-                        ${ type=="waterfalls" ?`
+                        ${ type=="waterfall" ?`
                             <input class="waterfall-height" type="number" placeholder="Height" />
                             <br>` : ``
                         }
-                        ${ type=="caves" ?`
+                        ${ type=="cave" ?`
                             <input class="cave-depth" type="number" placeholder="Depth" />
                             <br>
                             <input class="cave-length" type="number" placeholder="Length" />
                             <br>` : ``
                         }
-                        ${ type=="campsites" ? `` : ``
+                        ${ type=="campsite" ? `` : ``
                         }
                         <textarea class="map-element-description" rows="7" cols="60"></textarea><br>
                         <input class="map-element-images" type="file" multiple><br><br>
