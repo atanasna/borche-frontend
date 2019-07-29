@@ -1,13 +1,15 @@
 class Waterfall extends BasicMapElement {
-    constructor(id,name,coordinates,approved,height,description){
-        super(id,name,coordinates,approved,description);
+    constructor(id,name,coordinates,approved=false,height=null,description=null,images=null){
+        super(id,name,coordinates,approved,description,images);
         this.marker = null
         this.height = height
         if(approved){
-            this.iconImage = waterfallIconUrl    
+            this.iconImage = app.resourcer.icons.waterfall.color32
+            //this.iconImage = waterfallIconUrl
         }
         else{
-            this.iconImage = waterfallGrayIconUrl 
+            this.iconImage = app.resourcer.icons.waterfall.gray32
+            //this.iconImage = waterfallGrayIconUrl
         }
     }
 

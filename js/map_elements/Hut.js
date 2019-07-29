@@ -1,15 +1,17 @@
 class Hut extends BasicMapElement {
-    constructor(id, name, coordinates, approved, altitude, capacity, description){
-        super(id,name,coordinates,approved,description);
+    constructor(id, name, coordinates, approved=false, altitude=null, capacity=null, description=null, images = null){
+        super(id,name,coordinates,approved,description,images);
         this.marker = null
         if(approved){
-            this.iconImage = hutIconUrl    
+            this.iconImage = app.resourcer.icons.hut.color32
+            //this.iconImage = hutIconUrl    
         }
         else{
-            this.iconImage = hutGrayIconUrl 
+            this.iconImage = app.resourcer.icons.hut.gray32
+            //this.iconImage = hutGrayIconUrl 
         }
-        this.altitude = altitude
-        this.capacity = capacity
+        this.altitude = isNaN(altitude) ? null:altitude
+        this.capacity = isNaN(capacity) ? null:capacity
     }
 
     isValid(){
@@ -36,5 +38,11 @@ class Hut extends BasicMapElement {
         json.altitude = this.altitude
         json.capacity = this.capacity
         return json
+    }
+    toFormData(){
+        let formData = super.toFormData()
+        this.altitude != null && !isNaN(this.altitude) ? formData.set('altitude', this.altitude) : null
+        this.capacity != null && !isNaN(this.capacity) ? formData.set('capacity', this.capacity) : null
+        return formData
     }
 }

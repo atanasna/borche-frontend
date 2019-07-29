@@ -1,11 +1,12 @@
 class BasicMapElement{
-    constructor(id,name,coordinates,approved,description){
-        this.id = id
+    constructor(id,name,coordinates,approved=false,description=null,images=null){
+        this.id = isNaN(id) ? null:id
         this.name = name
         this.coordinates = coordinates
         this.approved = approved
         this.iconImage = null
         this.description = description
+        this.images = images
     }
 
     isValid(){
@@ -48,5 +49,17 @@ class BasicMapElement{
             longitude : this.coordinates.lng,
             description : this.description
         }
+    }
+
+    toFormData(){
+        let formData = new FormData();
+        this.name != null ? formData.set('name', this.name) : null
+        this.name != null ? formData.set('latitude', this.coordinates.lat) : null
+        this.name != null ? formData.set('longitude', this.coordinates.lng) : null
+        this.name != null ? formData.set('description', this.description) : null
+        for (let i = 0; i < this.images.length; i++) {
+            formData.append('images[]', this.images[i])
+        }
+        return formData
     }
 }

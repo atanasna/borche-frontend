@@ -2,15 +2,18 @@ function init() {
   // Initializa the Map
 
   app = new Application()
-  app.loadMapElements("huts").then(
-    function(){app.drawMapElements("huts")})
-  app.loadMapElements("campsites").then(
-    function(){app.drawMapElements("campsites")})
-  app.loadMapElements("caves").then(
-    function(){app.drawMapElements("caves")})
-  app.loadMapElements("waterfalls").then(
-    function(){app.drawMapElements("waterfalls")})
-  app.loadMapElements('paths').then(
-    function(){app.drawMapElements("paths")})
+  app.eventsHandler.attachInitialListeners()
+  app.loadMapElements("hut").then(
+    function(){app.drawMapElements("hut")})
+  app.loadMapElements("campsite").then(
+    function(){app.drawMapElements("campsite")})
+  app.loadMapElements("cave").then(
+    function(){app.drawMapElements("cave")})
+  app.loadMapElements("waterfall").then(
+    function(){app.drawMapElements("waterfall")})
+  app.loadMapElements('path').then(
+    function(){app.drawMapElements("path")})
+
+  app.loadTools()
 }
 

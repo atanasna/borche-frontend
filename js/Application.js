@@ -1,12 +1,12 @@
 class Application{
     constructor(){
-        this.map = new MapsHandler()
+        this.map = new MapHandler()
+        this.resourcer = new Resourcer()
         this.htmlBuilder = new HtmlBuilder()
         this.backendConnector = new BackendConnector()
         this.eventsHandler = new EventsHandler()
+        this.tools = []
         this.layers = {}
-
-        this.eventsHandler.attachInitialListeners()
     }
 
     // Loads all elements of the particular time in the elemnts hash
@@ -28,7 +28,7 @@ class Application{
     drawMapElements(type){
         var self = this
         this.layers[type].elements.forEach(function(element){
-            if(type == "paths"){
+            if(type == "path"){
                 element.polyline = self.map.addPolyline({
                     coordinates: element.coordinates,
                     color: element.color,
@@ -59,12 +59,14 @@ class Application{
             var container = self.getMainWindowContainer()
             container.innerHTML = self.htmlBuilder.mapElementShow(element,type)
             self.showMainWindow()
+            slideIndex = 1;
+            showDivs(slideIndex);
         })
     }
 
     hideObjects(type){
         this.layers[type].elements.forEach(function(item){
-            if(type=="paths"){
+            if(type=="path"){
                 item.polyline.setVisible(false)    
             }
             else{
@@ -75,7 +77,7 @@ class Application{
     }
     showObjects(type){
         this.layers[type].elements.forEach(function(item){
-            if(type=="paths"){
+            if(type=="path"){
                 item.polyline.setVisible(true)    
             }
             else{
@@ -102,5 +104,27 @@ class Application{
         else{
             return false
         }
+    }
+
+    loadTools(){
+        var self = this
+        this.tools.push(new Search(
+            "right-nav-search-tool",
+            "right-nav-button",
+            "right-nav-tools",
+            this.resourcer.icons.search.color32))
+
+        // Filters
+        var layers = ["hut","cave","waterfall","campsite","path"] 
+        layers.forEach(function(filter){
+            self.tools.push(new Filter(
+            filter,
+            "right-nav-"+filter+"-filter",
+            "right-nav-button",
+            "right-nav-filters",
+            self.resourcer.icons[filter].color32,
+            self.resourcer.icons[filter].scratched32))
+        })
+        
     }
 }

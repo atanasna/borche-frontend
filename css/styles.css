@@ -47,3 +47,6 @@ body {
   --dark-red: #952b2b;
   --light-green: #b9f8bf;
 }
+hr{
+  margin:0px;
+}

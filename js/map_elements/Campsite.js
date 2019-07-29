@@ -1,12 +1,14 @@
 class Campsite extends BasicMapElement {
-    constructor(id,name,coordinates,approved,description){
-        super(id,name,coordinates,approved,description);
+    constructor(id,name,coordinates,approved=false,description=null,images=null){
+        super(id,name,coordinates,approved,description,images);
         this.marker = null
         if(approved){
-            this.iconImage = campsiteIconUrl    
+            this.iconImage = app.resourcer.icons.campsite.color32
+            //this.iconImage = campsiteIconUrl    
         }
         else{
-            this.iconImage = campsiteGrayIconUrl 
+            this.iconImage = app.resourcer.icons.campsite.gray32
+            //this.iconImage = campsiteGrayIconUrl 
         }
     }
 

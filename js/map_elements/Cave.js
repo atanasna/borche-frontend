@@ -1,14 +1,16 @@
 class Cave extends BasicMapElement {
-    constructor(id,name,coordinates,approved,depth,lenght,description){
-        super(id,name,coordinates,approved,description);
+    constructor(id,name,coordinates,approved=false,depth=null,lenght=null,description=null,images=null){
+        super(id,name,coordinates,approved,description,images);
         this.marker = null
         this.depth = depth
         this.lenght = lenght
         if(approved){
-            this.iconImage = caveIconUrl    
+            this.iconImage = app.resourcer.icons.cave.color32
+            //this.iconImage = caveIconUrl    
         }
         else{
-            this.iconImage = caveGrayIconUrl 
+            this.iconImage = app.resourcer.icons.cave.gray32
+            //this.iconImage = caveGrayIconUrl 
         }
     }
 

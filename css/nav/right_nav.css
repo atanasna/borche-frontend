@@ -1,4 +1,4 @@
-.right-nav-filters{
+#right-nav-filters{
   z-index: 20;
   position: absolute;
   background-color: white;
@@ -17,7 +17,7 @@
   cursor: pointer;
 }
 
-.right-nav-tools{
+#right-nav-tools{
   z-index: 20;
   position: absolute;
   background-color: white;

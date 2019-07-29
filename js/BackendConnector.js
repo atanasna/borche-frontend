@@ -10,11 +10,11 @@ class BackendConnector{
 
     matchUrlbyType(type){
         var url
-        if(type=="huts"){ url = backend_huts_url}
-        if(type=="caves"){ url = backend_caves_url}
-        if(type=="paths"){ url = backend_paths_url}
-        if(type=="campsites"){ url = backend_campsites_url}
-        if(type=="waterfalls"){ url = backend_waterfalls_url}
+        if(type=="hut"){ url = backend_huts_url}
+        if(type=="cave"){ url = backend_caves_url}
+        if(type=="path"){ url = backend_paths_url}
+        if(type=="campsite"){ url = backend_campsites_url}
+        if(type=="waterfall"){ url = backend_waterfalls_url}
         return url
     }
     getMapElements(type){
@@ -25,7 +25,7 @@ class BackendConnector{
         .then( function(data){
             var elements = []
             for (var i = 0; i<data.length; i++){
-                if(type == "huts"){
+                if(type == "hut"){
                     var hut = new Hut(
                         data[i]['id'],
                         data[i]['name'],
@@ -36,7 +36,7 @@ class BackendConnector{
                         data[i]['description'])
                     elements.push(hut)
                 }
-                if(type == "campsites"){
+                if(type == "campsite"){
                     var campsite = new Campsite(
                         data[i]['id'],
                         data[i]['name'],
@@ -45,7 +45,7 @@ class BackendConnector{
                         data[i]['description'])
                     elements.push(campsite)
                 }
-                if(type == "caves"){
+                if(type == "cave"){
                     var cave = new Cave(
                         data[i]['id'],
                         data[i]['name'],
@@ -56,7 +56,7 @@ class BackendConnector{
                         data[i]['description'])
                     elements.push(cave)
                 }
-                if(type == "waterfalls"){
+                if(type == "waterfall"){
                     var wf = new Waterfall(
                         data[i]['id'],
                         data[i]['name'],
@@ -66,7 +66,7 @@ class BackendConnector{
                         data[i]['description'])
                     elements.push(wf)
                 }
-                if(type == "paths"){
+                if(type == "path"){
                     var coordinates = []
                     for (var j = 0; j<data[i]['latitudes'].length; j++){
                         coordinates.push({lat:data[i]['latitudes'][j], lng:data[i]['longitudes'][j]})
@@ -93,13 +93,20 @@ class BackendConnector{
         return fetch(url,{mode: 'cors'})
         .then( response => response.json() )
         .then( function(element){
+            console.log(element)
             return element
         })
     }
 
-    addMapElement(element,type){
+    addMapElement(mapElement,type){
         var url = `${this.matchUrlbyType(type)}`
-        return postFetch(url,element)   
+        return fetch(url, {
+            method: 'POST',
+            body: mapElement.toFormData(),
+        }).then(response => response.json())
+        .then(function(data){
+            return data
+        })
     }
 }
 

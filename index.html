@@ -4,20 +4,23 @@
     <title>PineTree</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="css/styles.css" rel="stylesheet">
-    <link href="css/main_window/forms.css" rel="stylesheet">
+    
     <link href="css/nav/left_nav.css" rel="stylesheet">
     <link href="css/nav/right_nav.css" rel="stylesheet">
     <link href="css/nav/hamburgers.css" rel="stylesheet">
     <link href="css/map/map.css" rel="stylesheet">
     <link href="css/map/info_boxes.css" rel="stylesheet">
     <link href="css/loading.css" rel="stylesheet">
+    <link href="css/main_window/forms.css" rel="stylesheet">
+    <link href="css/main_window/searchbox.css" rel="stylesheet">
     <link href="css/main_window/main_window.css" rel="stylesheet">
     <link href="css/main_window/add_map_element.css" rel="stylesheet">
+    <link href="css/main_window/show_map_element.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   </head>
   <body>
-
     <div id="loading-container">
       <img id="loading-image" src="resources/logo3.gif">
     </div>
@@ -41,22 +44,11 @@
       <div class="left-nav-button left-nav-contacts">Contacts</div>
     </div>
 
-    <div class="right-nav-filters">
-      <div class="right-nav-button right-nav-huts-filter">
-        <img src="resources/icons/hut32.png"></div>
-      <div class="right-nav-button right-nav-campsites-filter">
-        <img src="resources/icons/campsite32.png"></div>
-      <div class="right-nav-button right-nav-caves-filter">
-        <img src="resources/icons/cave32.png"></div>
-      <div class="right-nav-button right-nav-waterfalls-filter">
-        <img src="resources/icons/waterfall32.png"></div>
-      <div class="right-nav-button right-nav-paths-filter">
-        <img src="resources/icons/path32.png"></div>
+    <div id="right-nav-filters">
     </div>
-    <div class="right-nav-tools">
-      <div class="right-nav-button right-nav-search-tool">
-        <img src="resources/icons/nav/search32.png"></div>
-      <div class="right-nav-button right-nav-add-tool">
+    <div id="right-nav-tools">
+      
+      <div id="right-nav-add-tool" class="right-nav-button">
         <img src="resources/icons/nav/plus32.png"></div>
     </div>
 
@@ -67,6 +59,8 @@
       <div class="main-container">
       </div> 
     </div>
+
+    <!--<input id="pac-input" class="controls" type="text" placeholder="Borchee Search" style="display: none;"> -->
     <div id="map"></div>
 
     <script src="js/loadingscreen.js"></script>
@@ -81,13 +75,17 @@
     <script src="js/map_elements/Waterfall.js"></script>
     <script src="js/map_elements/Path.js"></script>
     <script src="js/map_elements/Area.js"></script>
+    <script src="js/tools/BasicTool.js"></script>
+    <script src="js/tools/Search.js"></script>
+    <script src="js/tools/Filter.js"></script>
     <script src="js/Application.js"></script>
+    <script src="js/Resourcer.js"></script>
     <script src="js/EventsHandler.js"></script>
-    <script src="js/MapsHandler.js"></script>
+    <script src="js/MapHandler.js"></script>
     <script src="js/BackendConnector.js"></script>
     <script src="js/HtmlBuilder.js"></script>
     <script src="js/nav/right_nav.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi4BTxWpALqxuGC3ZlRYm1E5bL5WL8u3A&callback=init" async defer>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi4BTxWpALqxuGC3ZlRYm1E5bL5WL8u3A&callback=init&libraries=places&language=en" async defer>
     </script>
   </body>
 </html>

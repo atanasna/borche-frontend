@@ -1,8 +1,7 @@
 class EventsHandler{
     constructor(){
         //Right Nav
-            this.add_button = document.querySelector(".right-nav-add-tool");
-            this.search_button = document.querySelector(".right-nav-search-tool");
+            this.add_button = document.querySelector("#right-nav-add-tool");
         //Left Nav
             this.show_lnav_button = document.querySelector(".left-nav-hamburger")
             this.hid_lnav_button = document.querySelector(".left-nav-back")
@@ -15,13 +14,14 @@ class EventsHandler{
     }
 
     attachInitialListeners(){
-        this.layerFilterButtonListener("huts",'resources/icons/hut32.png','resources/icons/no_hut32.png')
-        this.layerFilterButtonListener("caves",'resources/icons/cave32.png','resources/icons/no_cave32.png')
-        this.layerFilterButtonListener("waterfalls",'resources/icons/waterfall32.png','resources/icons/no_waterfall32.png')
-        this.layerFilterButtonListener("campsites",'resources/icons/campsite32.png','resources/icons/no_campsite32.png')
-        this.layerFilterButtonListener("paths",'resources/icons/path32.png','resources/icons/no_path32.png')
+        //this.layerFilterButtonListener("huts", app.resourcer.icons.hut.color32, app.resourcer.icons.hut.scratched32)
+        //this.layerFilterButtonListener("caves", app.resourcer.icons.cave.color32, app.resourcer.icons.cave.scratched32)
+        //this.layerFilterButtonListener("waterfalls", app.resourcer.icons.waterfall.color32, app.resourcer.icons.waterfall.scratched32)
+        //this.layerFilterButtonListener("campsites", app.resourcer.icons.campsite.color32, app.resourcer.icons.campsite.scratched32)
+        //this.layerFilterButtonListener("paths", app.resourcer.icons.path.color32, app.resourcer.icons.path.scratched32)
 
-        this.addToolButtonListener()
+        this.addElementButtonListener()
+        //this.searchElementsButtonListener()
         this.showLeftNavButtonListener()
         this.hideLeftNavButtonListener()
         this.missionButtonListener()
@@ -47,7 +47,7 @@ class EventsHandler{
                     }
                 })
             }
-            addToolButtonListener(){
+            addElementButtonListener(){
                 let self = this
                 self.add_button.addEventListener("click", function(){
                     var mainWindow = app.getMainWindowContainer()
@@ -55,6 +55,17 @@ class EventsHandler{
                     document.querySelector(".form-container").innerHTML = null
                     self.addFormDropdownListener()
                     app.showMainWindow()
+                })
+            }
+            searchElementsButtonListener(){
+                let self = this
+                self.search_button.addEventListener("click", function(){
+                    var searchbox = document.getElementById("pac-input");
+                    if (searchbox.style.display === "none") {
+                        searchbox.style.display = "block";
+                    } else {
+                        searchbox.style.display = "none";
+                    }
                 })
             }
         // Left navigation
@@ -128,64 +139,48 @@ class EventsHandler{
                 let description = document.querySelector(".map-element-description").value
                 let images = document.querySelector(".map-element-images").files
 
-                const formData = new FormData();
-                for (let i = 0; i < images.length; i++) {
-                    let image = images[i]
-                    formData.append('images[]', image)
-                }
-                formData.set('name', name)
-                formData.set('latitude', latitude)
-                formData.set('longitude', longitude)
-                formData.set('description', description)
                 if(type=="huts"){
-                    formData.set('altitude', document.querySelector(".hut-altitude").value)
-                    formData.set('capacity', document.querySelector(".hut-capacity").value)
-                    //new_element = new Hut(null, 
-                    //    name, 
-                    //    {lat:latitude,lng:longitude},
-                    //    false,
-                    //    parseInt(document.querySelector(".hut-altitude").value),
-                    //    parseInt(document.querySelector(".hut-capacity").value),
-                    //    description,
-                    //    images)
-                }
-                if(type=="campsites"){
-                    new_element = new Campsite(null, 
+                    new_element = new Hut(null, 
                         name, 
                         {lat:latitude,lng:longitude},
                         false,
-                        description)
+                        parseInt(document.querySelector(".hut-altitude").value),
+                        parseInt(document.querySelector(".hut-capacity").value),
+                        description,
+                        images)
                 }
-                if(type=="caves"){
-                    new_element = new Cave(null, 
-                        name, 
-                        {lat:latitude,lng:longitude},
-                        false,
-                        parseInt(document.querySelector(".cave-depth").value),
-                        parseInt(document.querySelector(".cave-length").value),
-                        description)
-                }
-                if(type=="waterfalls"){
-                    new_element = new Waterfall(null, 
-                        name, 
-                        {lat:latitude,lng:longitude},
-                        false,
-                        parseInt(document.querySelector(".waterfall-height").value),
-                        description)
-                }
-
-                console.log(123)
-                console.log(formData.keys())
+                //if(type=="campsites"){
+                //    new_element = new Campsite(null, 
+                //        name, 
+                //        {lat:latitude,lng:longitude},
+                //        false,
+                //        description)
+                //}
+                //if(type=="caves"){
+                //    new_element = new Cave(null, 
+                //        name, 
+                //        {lat:latitude,lng:longitude},
+                //        false,
+                //        parseInt(document.querySelector(".cave-depth").value),
+                //        parseInt(document.querySelector(".cave-length").value),
+                //        description)
+                //}
+                //if(type=="waterfalls"){
+                //    new_element = new Waterfall(null, 
+                //        name, 
+                //        {lat:latitude,lng:longitude},
+                //        false,
+                //        parseInt(document.querySelector(".waterfall-height").value),
+                //        description)
+                //}
 
                 let errors_container = document.querySelector(".form-failure-msg")
+                let success_container = document.querySelector(".form-success-msg")
                 let errors_content = "<ul>"
-                //if(new_element.isValid().code){
-                if(true){
-                    //app.backendConnector.addMapElement(new_element.toJson(),type)
-                    fetch("http://borche-api.pentatope.co.uk/huts", {
-                        method: 'POST',
-                        body: formData,
-                      }).then(function(response){
+                if(new_element.isValid().code){
+                    console.log(new_element)
+                    app.backendConnector.addMapElement(new_element,type)
+                    .then(function(response){
                         if(response.result=="failure"){
                             Object.keys(response.messages).forEach(function (key) { 
                                 console.log(response.messages[key])
@@ -195,8 +190,8 @@ class EventsHandler{
                             errors_container.innerHTML = "<div style='padding:10px'>" + errors_content + "</div>"
                         }
                         else{
-                            document.querySelector(".form-failure-msg").innerHTML = null
-                            document.querySelector(".form-success-msg").innerHTML = "<div style='padding:10px'>Success</div>"
+                            errors_container.innerHTML = null
+                            success_container.innerHTML = "<div style='padding:10px'>Success</div>"
                         }
                         console.log(response)
                     })
@@ -206,129 +201,8 @@ class EventsHandler{
                         errors_content += `<li>${error_msg}</li>`
                     })
                     errors_content += "<ul>"
-                    errors_container.innerHTML = errors_content
+                    errors_container.innerHTML = "<div style='padding:10px'>" + errors_content + "</div>"
                 }
             })
         }
-        //addHutFormSubmitListner(){
-        //    document.querySelector(".map-element-submit")
-        //    .addEventListener("click", function(evt){
-        //        let name = document.querySelector(".add-hut-name").value;
-        //        let latitude = parseFloat(document.querySelector(".add-hut-latitude").value);
-        //        let longitude = parseFloat(document.querySelector(".add-hut-longitude").value);
-        //        let altitude = parseInt(document.querySelector(".add-hut-altitude").value);
-        //        let capacity = parseInt(document.querySelector(".add-hut-capacity").value);
-//
-        //        let hut = new Hut(null, name, {lat:latitude,lng:longitude},false,null,altitude,capacity,null)
-//
-        //        if(hut.isValid().code){
-        //            let element = {}
-        //            element.name = hut.name
-        //            element.latitude = hut.coordinates.lat
-        //            element.longitude = hut.coordinates.lng
-        //            element.altitude = hut.altitude
-        //            element.capacity = hut.capacity
-        //            console.log(element)
-        //            app.backendConnector.addMapElement(element,"huts")
-        //            document.querySelector(".form-success-msg").innerHTML = "success"
-        //        }
-        //        else{
-        //            let errors_container = document.querySelector(".form-failure-msg")
-        //            let errors_content = "<ul>"
-        //            hut.isValid().errors.forEach(function(error_msg){
-        //                errors_content += `<li>${error_msg}</li>`
-        //            })
-        //            errors_content += "<ul>"
-        //            errors_container.innerHTML = errors_content
-        //        }
-        //    })
-        //}
-        //addCaveFormSubmitListner(){
-        //    document.querySelector(".add-cave-submit")
-        //    .addEventListener("click", function(evt){
-        //        let name = document.querySelector(".add-cave-name").value;
-        //        let latitude = parseFloat(document.querySelector(".add-cave-latitude").value);
-        //        let longitude = parseFloat(document.querySelector(".add-cave-longitude").value);
-        //        let depth = parseInt(document.querySelector(".add-cave-depth").value);
-        //        let length = parseInt(document.querySelector(".add-cave-length").value);
-//
-        //        let cave = new Cave(null, name, {lat:latitude,lng:longitude},false,null,depth,length,null)
-//
-        //        if(cave.isValid().code){
-        //            let element = {}
-        //            element.name = cave.name
-        //            element.latitude = cave.coordinates.lat
-        //            element.longitude = cave.coordinates.lng
-        //            element.depth = cave.depth
-        //            element.length = cave.length
-        //            let res = app.backendConnector.addMapElement(element,"caves")
-        //            console.log(res)
-        //        }
-        //        else{
-        //            let errors_container = document.querySelector(".form-failure-msg")
-        //            let errors_content = "<ul>"
-        //            cave.isValid().errors.forEach(function(error_msg){
-        //                errors_content += `<li>${error_msg}</li>`
-        //            })
-        //            errors_content += "<ul>"
-        //            errors_container.innerHTML = errors_content
-        //        }
-        //    })
-        //}
-        //addCampsiteFormSubmitListner(){
-        //    document.querySelector(".add-campsite-submit")
-        //    .addEventListener("click", function(evt){
-        //        let name = document.querySelector(".add-campsite-name").value;
-        //        let latitude = parseFloat(document.querySelector(".add-campsite-latitude").value);
-        //        let longitude = parseFloat(document.querySelector(".add-campsite-longitude").value);
-        //        
-        //        let campsite = new Hut(null, name, {lat:latitude,lng:longitude},false,null,null)
-//
-        //        if(campsite.isValid().code){
-        //            let element = {}
-        //            element.name = campsite.name
-        //            element.latitude = campsite.coordinates.lat
-        //            element.longitude = campsite.coordinates.lng
-        //            app.backendConnector.addMapElement(element,"campsites")
-        //        }
-        //        else{
-        //            let errors_container = document.querySelector(".form-failure-msg")
-        //            let errors_content = "<ul>"
-        //            campsite.isValid().errors.forEach(function(error_msg){
-        //                errors_content += `<li>${error_msg}</li>`
-        //            })
-        //            errors_content += "<ul>"
-        //            errors_container.innerHTML = errors_content
-        //        }
-        //    })
-        //}
-        //addWaterfallFormSubmitListner(){
-        //    document.querySelector(".add-waterfall-submit")
-        //    .addEventListener("click", function(evt){
-        //        let name = document.querySelector(".add-waterfall-name").value;
-        //        let latitude = parseFloat(document.querySelector(".add-waterfall-latitude").value);
-        //        let longitude = parseFloat(document.querySelector(".add-waterfall-longitude").value);
-        //        let height = parseInt(document.querySelector(".add-waterfall-height").value);
-        //        
-        //        let wf = new Waterfall(null, name, {lat:latitude,lng:longitude},false,null,height,null)
-//
-        //        if(wf.isValid().code){
-        //            let element = {}
-        //            element.name = wf.name
-        //            element.latitude = wf.coordinates.lat
-        //            element.longitude = wf.coordinates.lng
-        //            element.height = wf.height
-        //            app.backendConnector.addMapElement(element,"waterfalls")
-        //        }
-        //        else{
-        //            let errors_container = document.querySelector(".form-failure-msg")
-        //            let errors_content = "<ul>"
-        //            wf.isValid().errors.forEach(function(error_msg){
-        //                errors_content += `<li>${error_msg}</li>`
-        //            })
-        //            errors_content += "<ul>"
-        //            errors_container.innerHTML = errors_content
-        //        }
-        //    })
-        //}   
 }
