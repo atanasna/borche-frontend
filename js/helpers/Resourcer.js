@@ -24,7 +24,7 @@ class Resourcer{
             search : {
                 color32: "resources/icons/nav/search32.png"
             },
-            add : {
+            newitem : {
                 color32: "resources/icons/nav/plus32.png"
             }
         }
@@ -40,6 +40,9 @@ class Resourcer{
             star_4:"resources/score_4_0.png",
             star_4_5:"resources/score_4_5.png",
             star_5:"resources/score_5_0.png"
+        }
+        this.misc = {
+            cross: "resources/icons/nav/cross16.png"
         }
     }
 }

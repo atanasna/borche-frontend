@@ -29,7 +29,7 @@ class HtmlBuilder{
             if(type=="waterfall"){ container = this.waterfallShow(element)}
             return container
         }
-        mapElementAdd(type){
+        newElement(type){
             var container = `
                 <div class="main-title">Add new 
                     <select class="add-element-select">
@@ -45,10 +45,10 @@ class HtmlBuilder{
                     <div class="form-msg form-failure-msg"></div>
                     <div class="form-msg form-success-msg"></div>
                     <div class="form-inputs">
-                        <input class="map-element-name" type="text" placeholder="Name*" />
+                        <input id="new-element-name" type="text" placeholder="Name*" />
                         <br>
-                        <input class="map-element-latitude" type="number" step="0.00001" placeholder="Latitude*" />
-                        <input class="map-element-longitude" type="number" step="0.00001" placeholder="Longitude*" />
+                        <input id="new-element-latitude" type="number" step="0.00001" placeholder="Latitude*" />
+                        <input id="new-element-longitude" type="number" step="0.00001" placeholder="Longitude*" />
                         <br>
                         ${ type=="hut" ?`
                             <input class="hut-altitude" type="number" placeholder="Altitude" />
@@ -68,9 +68,9 @@ class HtmlBuilder{
                         }
                         ${ type=="campsite" ? `` : ``
                         }
-                        <textarea class="map-element-description" rows="7" cols="60"></textarea><br>
-                        <input class="map-element-images" type="file" multiple><br><br>
-                        <input class="map-element-submit" type="submit"/>
+                        <textarea id="new-element-description" rows="7" cols="60"></textarea><br>
+                        <input id="new-element-images" type="file" multiple><br><br>
+                        <input id="new-element-submit" type="submit"/>
                     </div>
                 </div>
             `
@@ -110,11 +110,12 @@ class HtmlBuilder{
             return container
         }
         hutShow(element){
+            console.log(element)
             var score_image_name = "star_"+(element.score-(element.score%0.5)).toString().replace(".","_")
             console.log(score_image_name)
             console.log(app.resourcer.score[score_image_name])
             var container = `
-                <div class="main-title">${element.general.name}</div>
+                <div class="main-title">${element.name}</div>
                 <hr>
                 <div class="main-content">
                     <div class="w3-content w3-display-container">
@@ -130,14 +131,14 @@ class HtmlBuilder{
                     </div>
                     <hr>
                     <br>
-                    ${element.general.altitude ?`
-                        altitude:${element.general.altitude}<br>` : ``
+                    ${element.altitude ?`
+                        altitude:${element.altitude}<br>` : ``
                     }
-                    ${element.general.capacity ?`
-                        capacity:${element.general.capacity}<br>` : ``
+                    ${element.capacity ?`
+                        capacity:${element.capacity}<br>` : ``
                     }
-                    lat:${element.general.latitude},lng:${element.general.longitude}<br><br> 
-                    ${element.general.description}<br>
+                    lat:${element.coordinates.lat},lng:${element.coordinates.lng}<br><br> 
+                    ${element.description}<br>
                 </div>
             `
             return container
@@ -181,16 +182,16 @@ class HtmlBuilder{
         }
         caveShow(element){
             var container = `
-                <div class="main-title">${element.general.name}</div>
+                <div class="main-title">${element.name}</div>
                 <hr>
                 <div class="main-content">
-                    ${element.general.depth ?`
-                        depth:${element.general.depth}<br>` : ``
+                    ${element.depth ?`
+                        depth:${element.depth}<br>` : ``
                     }
-                    ${element.general.lenght ?`
-                        lenght:${element.general.lenght}<br>` : ``
+                    ${element.length ?`
+                        lenght:${element.length}<br>` : ``
                     }
-                    lat:${element.general.latitude},lng:${element.general.longitude}<br> 
+                    lat:${element.latitude},lng:${element.longitude}<br> 
                     score:${element.score}<br>
                 </div>
             `
@@ -226,10 +227,10 @@ class HtmlBuilder{
         }
         campsiteShow(element){
             var container = `
-                <div class="main-title">${element.general.name}</div>
+                <div class="main-title">${element.name}</div>
                 <hr>
                 <div class="main-content">
-                    lat:${element.general.latitude},lng:${element.general.longitude}<br> 
+                    lat:${element.latitude},lng:${element.longitude}<br> 
                     score:${element.score}<br>
                 </div>
             `
@@ -265,13 +266,13 @@ class HtmlBuilder{
         }
         waterfallShow(element){
             var container = `
-                <div class="main-title">${element.general.name}</div>
+                <div class="main-title">${element.name}</div>
                 <hr>
                 <div class="main-content">
-                    ${element.general.height ?`
-                        depth:${element.general.height}<br>` : ``
+                    ${element.height ?`
+                        depth:${element.height}<br>` : ``
                     }
-                    lat:${element.general.latitude},lng:${element.general.longitude}<br> 
+                    lat:${element.latitude},lng:${element.longitude}<br> 
                     score:${element.score}<br>
                 </div>
             `

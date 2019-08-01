@@ -1,4 +1,4 @@
-var time = 1500;
+var time = 2500;
 
 function show() {
     document.getElementById("loading-container").style.display="block";

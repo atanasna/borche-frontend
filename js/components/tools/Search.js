@@ -2,27 +2,25 @@ class Search extends BasicTool {
     constructor(button_id,button_class,placeholder,icon_url){
         super(button_id,button_class,placeholder,icon_url)
         //this.button = this.addHTMLSearchButton("right-nav-search-tool","right-nav-button")    
-        this.inputBox = this.addHTMLSearchBox("pac-input","controls")
-        this.searchBox = new google.maps.places.SearchBox(this.inputBox)
-        
-        this.addButtonListener()
-        this.addSearchBoxListener()
+        this.attachButtonListener()
+        this.createSearchBox("pac-input","controls")
+        this.attachSearchBoxListener()
     }
 
     // HTML Generators
-    addHTMLSearchBox(searcBox_id,searchBox_class){
-        var searchBox = document.createElement("input");
-        searchBox.setAttribute("type", "text");
-        searchBox.setAttribute("class", searchBox_class);
-        searchBox.setAttribute("id", searcBox_id);
-        searchBox.setAttribute("style","display: none;")
-        searchBox.setAttribute("placeholder","Borchee Search")
-        document.body.appendChild(searchBox);
-        return searchBox
+    createSearchBox(searcBox_id,searchBox_class){
+        this.inputBox = document.createElement("input");
+        this.inputBox.setAttribute("type", "text");
+        this.inputBox.setAttribute("class", searchBox_class);
+        this.inputBox.setAttribute("id", searcBox_id);
+        this.inputBox.setAttribute("style","display: none;")
+        this.inputBox.setAttribute("placeholder","Borchee Search")
+        document.body.appendChild(this.inputBox);
+        this.searchBox = new google.maps.places.SearchBox(this.inputBox)
     }
 
     // Event Listeners
-    addButtonListener(){
+    attachButtonListener(){
         var self = this
         this.button.addEventListener("click", function(){
             if (self.inputBox.style.display === "none") {
@@ -32,12 +30,13 @@ class Search extends BasicTool {
             }
         })
     }
-    addSearchBoxListener(){
+    attachSearchBoxListener(){
         var self = this
         var markers = []
         // Listen for the event fired when the user selects a prediction and retrieve
         // more details for that place.
         self.searchBox.addListener('places_changed', function() {
+            console.log("KURPO")
             var places = self.searchBox.getPlaces();
             console.log(places)
             if (places.length == 0) {
@@ -83,7 +82,45 @@ class Search extends BasicTool {
             console.log(bounds)
             app.map.map.fitBounds(bounds);
         });
+
+        var inputBox = document.querySelector("#pac-input")
+        inputBox.addEventListener("keyup",function(){
+            var pacContainer = document.querySelector(".pac-container")
+            var foundElements = self.searchElements(inputBox.value)
+            pacContainer.innerHTML=null
+            for (var i in foundElements){
+                var pacItem = document.createElement("div")
+                pacItem.setAttribute("class","pac-item")
+                pacItem.innerHTML = `
+                    <span class="pac-icon pac-icon-marker"></span>
+                    <span class="pac-item-query">
+                        ${foundElements[i].name}
+                    </span>
+                    <span>${foundElements[i].constructor.name}</span>`
+                pacContainer.appendChild(pacItem)
+                pacItem.addEventListener("click", function(){
+                    console.log("alabala")
+                })
+            }
+            pacContainer.style.display="block"
+        })
     }    
+
+    searchElements(searchInput){
+        let foundElements = []
+        for (var layer_i in app.layers){
+            for(var element_i in app.layers[layer_i].elements){
+                let element = app.layers[layer_i].elements[element_i]
+                //console.log(element)
+                if(element.name != null){
+                    if(element.name.toLowerCase().match(new RegExp(searchInput.toLowerCase(),"g"))){
+                        foundElements.push(element)
+                    }
+                }
+            }
+        }
+        return foundElements
+    }
 }
 
 

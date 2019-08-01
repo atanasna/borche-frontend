@@ -1,6 +1,6 @@
 class Hut extends BasicMapElement {
-    constructor(id, name, coordinates, approved=false, altitude=null, capacity=null, description=null, images = null){
-        super(id,name,coordinates,approved,description,images);
+    constructor(id, name, coordinates, approved=false, altitude=null, capacity=null, description=null, images = null,score=null,reviews=null){
+        super(id,name,coordinates,approved,description,images,score,reviews);
         this.marker = null
         if(approved){
             this.iconImage = app.resourcer.icons.hut.color32
@@ -39,6 +39,22 @@ class Hut extends BasicMapElement {
         json.capacity = this.capacity
         return json
     }
+
+    static fromJson(data){
+        let hut = new Hut(
+            data['id'],
+            data['name'],
+            {lat: data['latitude'], lng: data['longitude']},
+            data['approved'],
+            data['altitude'],
+            data['capacity'],
+            data['description'],
+            data['images'],
+            data['score'],
+            data['reviews'],) 
+        return hut
+    }
+    
     toFormData(){
         let formData = super.toFormData()
         this.altitude != null && !isNaN(this.altitude) ? formData.set('altitude', this.altitude) : null

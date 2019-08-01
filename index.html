@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PineTree</title>
+    <title>Borchee</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -48,45 +48,51 @@
     </div>
     <div id="right-nav-tools">
       
-      <div id="right-nav-add-tool" class="right-nav-button">
-        <img src="resources/icons/nav/plus32.png"></div>
+      <!--<div id="right-nav-add-tool" class="right-nav-button">
+        <img src="resources/icons/nav/plus32.png"></div> -->
     </div>
 
-    <div id="main-window">
+    <!--<div id="main-window">
       <div class="main-cross">
         <img src="resources/icons/nav/cross16.png">
       </div>
-      <div class="main-container">
-      </div> 
+      <div id="main-window-header"></div>
+      <div id="main-window-body"class="main-container"></div> 
+      <div id="main-window-footer"></div>
     </div>
 
-    <!--<input id="pac-input" class="controls" type="text" placeholder="Borchee Search" style="display: none;"> -->
+    <input id="pac-input" class="controls" type="text" placeholder="Borchee Search" style="display: none;"> -->
     <div id="map"></div>
 
-    <script src="js/loadingscreen.js"></script>
-    <script src="js/nav/left_nav.js"></script>
+    <script src="js/misc/loadingscreen.js"></script>
+    <script src="js/helpers/Resourcer.js"></script>
+    
     <script src="js/init.js"></script>
     <script src="js/shared_vars.js"></script>
-    <script src="js/main_window.js"></script>
-    <script src="js/map_elements/BasicMapElement.js"></script>
-    <script src="js/map_elements/Hut.js"></script>
-    <script src="js/map_elements/Campsite.js"></script>
-    <script src="js/map_elements/Cave.js"></script>
-    <script src="js/map_elements/Waterfall.js"></script>
-    <script src="js/map_elements/Path.js"></script>
-    <script src="js/map_elements/Area.js"></script>
-    <script src="js/map_elements/Layer.js"></script>
-    <script src="js/tools/BasicTool.js"></script>
-    <script src="js/tools/Search.js"></script>
-    <script src="js/tools/Filter.js"></script>
+    
+    <script src="js/elements/BasicMapElement.js"></script>
+    <script src="js/elements/Hut.js"></script>
+    <script src="js/elements/Campsite.js"></script>
+    <script src="js/elements/Cave.js"></script>
+    <script src="js/elements/Waterfall.js"></script>
+    <script src="js/elements/Path.js"></script>
+    <script src="js/elements/Area.js"></script>
+
+    <script src="js/components/Layer.js"></script>
+    <script src="js/components/tools/BasicTool.js"></script>
+    <script src="js/components/tools/Search.js"></script>
+    <script src="js/components/tools/Filter.js"></script>
+    <script src="js/components/tools/NewElement.js"></script>
+    <script src="js/components/MainWindow.js"></script>
+    <script src="js/components/MapHandler.js"></script>
 
     <script src="js/Application.js"></script>
-    <script src="js/Resourcer.js"></script>
+    
     <script src="js/EventsHandler.js"></script>
-    <script src="js/MapHandler.js"></script>
+    
     <script src="js/BackendConnector.js"></script>
-    <script src="js/HtmlBuilder.js"></script>
-    <script src="js/nav/right_nav.js"></script>
+    <script src="js/helpers/HtmlBuilder.js"></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi4BTxWpALqxuGC3ZlRYm1E5bL5WL8u3A&callback=init&libraries=places&language=en" async defer>
     </script>
   </body>

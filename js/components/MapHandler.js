@@ -10,6 +10,7 @@ class MapHandler{
         fullscreenControl: false,
         zoomControl: false
     });
+    this.attachRightClickListner()
   }
 
   addMarker(properties){
@@ -104,5 +105,14 @@ class MapHandler{
     }
     
     return polyline
+  }
+
+  attachRightClickListner(){
+      google.maps.event.addListener(this.map, "rightclick", function(event) {
+          var lat = event.latLng.lat();
+          var lng = event.latLng.lng();
+          // populate yor box/field with lat, lng
+          alert("Lat=" + lat + "; Lng=" + lng);
+      });
   }
 }

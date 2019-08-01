@@ -1,5 +1,5 @@
 class BasicMapElement{
-    constructor(id,name,coordinates,approved=false,description=null,images=null){
+    constructor(id,name,coordinates,approved=false,description=null,images=null,score=null,reviews=null){
         this.id = isNaN(id) ? null:id
         this.name = name
         this.coordinates = coordinates
@@ -7,6 +7,8 @@ class BasicMapElement{
         this.iconImage = null
         this.description = description
         this.images = images
+        this.score = score
+        this.reviews = reviews
     }
 
     isValid(){
@@ -47,7 +49,9 @@ class BasicMapElement{
             name : this.name,
             latitude : this.coordinates.lat,
             longitude : this.coordinates.lng,
-            description : this.description
+            approved : this.approved,
+            description : this.description,
+            images: this.images
         }
     }
 

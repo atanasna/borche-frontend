@@ -18,6 +18,7 @@ class BackendConnector{
         return url
     }
     getMapElements(type){
+        var self = this
         var url = this.matchUrlbyType(type)
 
         return fetch(url,{mode: 'cors'})
@@ -25,88 +26,50 @@ class BackendConnector{
         .then( function(data){
             var elements = []
             for (var i = 0; i<data.length; i++){
-                if(type == "hut"){
-                    var hut = new Hut(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        data[i]['approved'],
-                        data[i]['altitude'],
-                        data[i]['capacity'],
-                        data[i]['description'])
-                    elements.push(hut)
-                }
-                if(type == "campsite"){
-                    var campsite = new Campsite(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        data[i]['approved'],
-                        data[i]['description'])
-                    elements.push(campsite)
-                }
-                if(type == "cave"){
-                    var cave = new Cave(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        data[i]['approved'],
-                        data[i]['depth'],
-                        data[i]['lenght'],
-                        data[i]['description'])
-                    elements.push(cave)
-                }
-                if(type == "waterfall"){
-                    var wf = new Waterfall(
-                        data[i]['id'],
-                        data[i]['name'],
-                        {lat: data[i]['latitude'], lng: data[i]['longitude']},
-                        data[i]['approved'],
-                        data[i]['height'],
-                        data[i]['description'])
-                    elements.push(wf)
-                }
-                if(type == "path"){
-                    var coordinates = []
-                    for (var j = 0; j<data[i]['latitudes'].length; j++){
-                        coordinates.push({lat:data[i]['latitudes'][j], lng:data[i]['longitudes'][j]})
-                    }
-
-                    var path = new Path(
-                        data[i]['id'],
-                        data[i]['name'],
-                        coordinates,
-                        data[i]['color'],
-                        data[i]['lenght'],
-                        data[i]['time'],
-                        data[i]['description']) 
-                    elements.push(path)   
-                }
+                elements.push(self.jsonToMapElement(type, data[i]))
             }
             return elements
         })
     }
 
     getMapElement(id,type){
+        var self = this
         var url = `${this.matchUrlbyType(type)}/${id}`
-        console.log(url)
+
         return fetch(url,{mode: 'cors'})
         .then( response => response.json() )
-        .then( function(element){
-            console.log(element)
-            return element
+        .then( function(data){
+            return self.jsonToMapElement(type, data)
         })
     }
 
-    addMapElement(mapElement,type){
+    addMapElement(element,type){
         var url = `${this.matchUrlbyType(type)}`
         return fetch(url, {
             method: 'POST',
-            body: mapElement.toFormData(),
+            body: element.toFormData(),
         }).then(response => response.json())
         .then(function(data){
             return data
         })
+    }
+
+    jsonToMapElement(type,data){
+        if(type == "hut"){
+            return Hut.fromJson(data)
+        }
+        if(type == "campsite"){
+            return Campsite.fromJson(data)
+        }
+        if(type == "cave"){
+            return Cave.fromJson(data)
+        }
+        if(type == "waterfall"){
+            return Waterfall.fromJson(data)
+        }
+        if(type == "path"){
+            return Path.fromJson(data)
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 class Waterfall extends BasicMapElement {
-    constructor(id,name,coordinates,approved=false,height=null,description=null,images=null){
-        super(id,name,coordinates,approved,description,images);
+    constructor(id,name,coordinates,approved=false,height=null,description=null,images=null,score=null,reviews=null){
+        super(id,name,coordinates,approved,description,images,score,reviews);
         this.marker = null
         this.height = height
         if(approved){
@@ -24,10 +24,31 @@ class Waterfall extends BasicMapElement {
         }
         return result  
     }
+
     toJson(){
         let json = super.toJson()
         json.height = this.height
         return json
+    }
+
+    static fromJson(data){
+        let wf = new Waterfall(
+            data['id'],
+            data['name'],
+            {lat: data['latitude'], lng: data['longitude']},
+            data['approved'],
+            data['height'],
+            data['description'],
+            data['images'],
+            data['score'],
+            data['reviews'],) 
+        return wf
+    }
+
+    toFormData(){
+        let formData = super.toFormData()
+        this.height != null && !isNaN(this.height) ? formData.set('height', this.height) : null
+        return formData
     }
 }
 //
