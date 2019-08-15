@@ -4,7 +4,6 @@ class BasicMapElement{
         this.name = name
         this.coordinates = coordinates
         this.approved = approved
-        this.iconImage = null
         this.description = description
         this.images = images
         this.score = score
@@ -65,5 +64,47 @@ class BasicMapElement{
             formData.append('images[]', this.images[i])
         }
         return formData
+    }
+
+    static icon(type){
+        let classname = this.toString().split ('(' || /s+/)[0].split (' ' || /s+/)[1];
+        
+        switch(type){
+            case "active":
+                return new google.maps.MarkerImage(app.resourcer.icons[classname.toLowerCase()].color32,
+                    new google.maps.Size(32, 32),
+                    new google.maps.Point(0, 0),
+                    new google.maps.Point(16, 16));
+                break
+            case "active_hover":
+                return new google.maps.MarkerImage(app.resourcer.icons[classname.toLowerCase()].circled,
+                    new google.maps.Size(48, 48),
+                    new google.maps.Point(0, 0),
+                    new google.maps.Point(24, 24));
+                break
+            case "active_click":
+                return new google.maps.MarkerImage(app.resourcer.icons[classname.toLowerCase()].circled,
+                    new google.maps.Size(48, 48),
+                    new google.maps.Point(0, 0),
+                    new google.maps.Point(24, 24));
+                break
+            case "pending":
+                return new google.maps.MarkerImage(app.resourcer.icons[classname.toLowerCase()].gray32,
+                    new google.maps.Size(32, 32),
+                    new google.maps.Point(0, 0),
+                    new google.maps.Point(16, 16));
+                break
+            case "pending_hover":
+                return new google.maps.MarkerImage(app.resourcer.icons[classname.toLowerCase()].gray48_circled,
+                    new google.maps.Size(48, 48),
+                    new google.maps.Point(0, 0),
+                    new google.maps.Point(24, 24));
+                break
+            case "pending_click":
+                return new google.maps.MarkerImage(app.resourcer.icons[classname.toLowerCase()].gray48_circled,
+                    new google.maps.Size(48, 48),
+                    new google.maps.Point(0, 0),
+                    new google.maps.Point(24, 24));
+        }
     }
 }

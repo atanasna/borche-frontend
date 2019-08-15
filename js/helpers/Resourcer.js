@@ -2,25 +2,33 @@ class Resourcer{
     constructor(){
         this.icons = {
             hut : {
-                color32 : "resources/icons/hut32.png",
-                gray32 : "resources/icons/hut32-gray.png", 
-                scratched32 : "resources/icons/no_hut32.png"},
+                color32 : "resources/icons/set2/hut32_2.png",
+                scratched32 : "resources/icons/set2/no_hut32.png",
+                circled: "resources/icons/set2/hut48_circled.png",
+                gray32 : "resources/icons/set2/hut32_gray.png", 
+                gray48_circled: "resources/icons/set2/hut48_gray_circled.png"},
             campsite : {
-                color32 : "resources/icons/campsite2-32.png",
-                gray32 : "resources/icons/campsite2-32-gray.png", 
-                scratched32 : "resources/icons/no_campsite2-32.png"},
+                color32 : "resources/icons/set2/campsite32.png",
+                scratched32 : "resources/icons/set2/no_campsite32.png",
+                circled: "resources/icons/set2/campsite48_circled.png",
+                gray32 : "resources/icons/set2/campsite32_gray.png", 
+                gray48_circled: "resources/icons/set2/campsite48_gray_circled.png"},
             cave : {
-                color32: "resources/icons/cave2-32.png",
-                gray32 : "resources/icons/cave2-32-gray.png", 
-                scratched32 : "resources/icons/no_cave2-32.png"},
+                color32: "resources/icons/set2/cave32.png",
+                scratched32 : "resources/icons/set2/no_cave32.png",
+                circled: "resources/icons/set2/cave48_circled.png",
+                gray32 : "resources/icons/set2/cave32_gray.png", 
+                gray48_circled: "resources/icons/set2/cave48_gray_circled.png"},
             waterfall : {
-                color32: "resources/icons/waterfall32.png",
-                gray32 : "resources/icons/waterfall32-gray.png", 
-                scratched32 : "resources/icons/no_waterfall32.png"},
+                color32: "resources/icons/set2/waterfall32_2.png",
+                scratched32 : "resources/icons/set2/no_waterfall32.png",
+                circled: "resources/icons/set2/waterfall48_circled.png",
+                gray32 : "resources/icons/set2/waterfall32_gray.png", 
+                gray48_circled: "resources/icons/set2/waterfall48_gray_circled.png"},
             path : {
-                color32: "resources/icons/path32.png",
-                gray32 : "resources/icons/path32-gray.png", 
-                scratched32 : "resources/icons/no_path32.png"},
+                color32: "resources/icons/set2/path32.png",
+                gray32 : "resources/icons/set2/path32-gray.png", 
+                scratched32 : "resources/icons/set2/no_path32.png"},
             search : {
                 color32: "resources/icons/nav/search32.png"
             },

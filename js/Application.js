@@ -25,6 +25,9 @@ class Application{
           function(){self.drawMapElements("waterfall")})
         this.loadMapElements('path').then(
           function(){self.drawMapElements("path")})  
+
+        //this.loadMapElements('area').then(
+        //  function(){self.drawMapElements("area")})  
     }
     loadTools(){
         var self = this
@@ -54,7 +57,7 @@ class Application{
     // Loads all elements of the particular time in the elements hash
     loadMapElements(type){
         var self = this
-        //Create new array if there is none
+        //Create new layer if there is none
         if(this.layers[type]==null){
             this.layers[type] = new Layer(type)
         }
@@ -81,30 +84,47 @@ class Application{
     drawMapElement(element){
         var self = this
         let type = element.constructor.name.toLowerCase()
-        if(type == "path"){
-            element.polyline = self.map.addPolyline({
-                coordinates: element.coordinates,
-                color: element.color,
-                content: self.htmlBuilder.mapElementMinorInfo(element,type)
-            })
-        }
-        else{
-            element.marker = self.map.addMarker({
-                id: element.id,
-                type: type,
-                coordinates: element.coordinates,
-                iconImage: element.iconImage,
-                minorContent: self.htmlBuilder.mapElementMinorInfo(element,type),
-                majorContent: self.htmlBuilder.mapElementMajorInfo(element,type)
-            })
+        switch(type){
+            case "path":
+                element.polyline = self.map.addPolyline({
+                    coordinates: element.coordinates,
+                    color: element.color,
+                    content: self.htmlBuilder.mapElementMinorInfo(element,type)
+                })
+                break
+            case "area":
+                element.poligon = self.map.addPoligon({
+                    coordinates: element.coordinates,
+                    border_color: "#4364ff",
+                    fill_color: "#ffffff"
+                })
+                break
+            default:
+                if(element.approved){
+                    let icon = element.constructor.icon("active")
+                }
+                else{
+                    let icon = element.constructor.icon("pending")
+                }
+                element.marker = self.map.addMarker({
+                    id: element.id,
+                    type: type,
+                    coordinates: element.coordinates,
+                    icon: (element.approved) ? element.constructor.icon("active") : element.constructor.icon("pending"),
+                    hoverIcon: (element.approved) ? element.constructor.icon("active_hover") : element.constructor.icon("pending_hover"),
+                    clickIcon: (element.approved) ? element.constructor.icon("active_click") : element.constructor.icon("pending_click"),
+                    minorContent: self.htmlBuilder.mapElementMinorInfo(element,type),
+                    majorContent: self.htmlBuilder.mapElementMajorInfo(element,type)
+                })
+                break
         }
     }
     drawMapElements(type){
         var self = this
         this.layers[type].elements.forEach(function(element){
-
             self.drawMapElement(element)
         });    
+        this.layers[type].createMarkerCluster()
     }
     // Show the element on the main Window of the app
     showMapElement(id,type){

@@ -31,12 +31,12 @@ class EventsHandler{
         // Left navigation
             showLeftNavButtonListener(){
                 this.show_lnav_button.addEventListener("click", function() {
-                    var nav = document.querySelector(".left-nav").style.zIndex = 30
+                    var nav = document.querySelector(".left-nav").style.display = "block"
                 });
             }
             hideLeftNavButtonListener(){
                 this.hid_lnav_button.addEventListener("click", function() {
-                    document.querySelector(".left-nav").style.zIndex = 5
+                    document.querySelector(".left-nav").style.display = "none"
                 });
             }
             missionButtonListener(){

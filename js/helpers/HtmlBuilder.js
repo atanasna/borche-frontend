@@ -298,11 +298,11 @@ class HtmlBuilder{
             var container = document.createElement('div');
             container.innerHTML = `
                 ${ path.time ?`
-                    time:<b>${Math.floor(path.time/60)}h ${path.time%60}m</b>` : ``
+                    time: <b>${Math.floor(path.time/60)}h ${path.time%60}m</b>` : ``
                 }
-                ${ path.lenght ?`
+                ${ path.distance ?`
                     <br>
-                    lenght:<b>${path.lenght}km</b>` : ``
+                    lenght: <b>${path.distance}km</b>` : ``
                 }
             `
             return container

@@ -3,14 +3,6 @@ class Waterfall extends BasicMapElement {
         super(id,name,coordinates,approved,description,images,score,reviews);
         this.marker = null
         this.height = height
-        if(approved){
-            this.iconImage = app.resourcer.icons.waterfall.color32
-            //this.iconImage = waterfallIconUrl
-        }
-        else{
-            this.iconImage = app.resourcer.icons.waterfall.gray32
-            //this.iconImage = waterfallGrayIconUrl
-        }
     }
 
     isValid(){

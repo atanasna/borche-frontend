@@ -1,8 +1,9 @@
-var backend_huts_url = "http://borche-api.pentatope.co.uk/huts"
-var backend_campsites_url = "http://borche-api.pentatope.co.uk/campsites"
-var backend_caves_url = "http://borche-api.pentatope.co.uk/caves"
-var backend_waterfalls_url = "http://borche-api.pentatope.co.uk/waterfalls"
-var backend_paths_url = "http://borche-api.pentatope.co.uk/paths"
+var backend_huts_url = "http://api.borchee.com/huts"
+var backend_campsites_url = "http://api.borchee.com/campsites"
+var backend_caves_url = "http://api.borchee.com/caves"
+var backend_waterfalls_url = "http://api.borchee.com/waterfalls"
+var backend_paths_url = "http://api.borchee.com/paths"
+var backend_areas_url = "http://api.borchee.com/areas"
 
 class BackendConnector{
     constructor(){
@@ -15,6 +16,7 @@ class BackendConnector{
         if(type=="path"){ url = backend_paths_url}
         if(type=="campsite"){ url = backend_campsites_url}
         if(type=="waterfall"){ url = backend_waterfalls_url}
+        if(type=="area"){ url = backend_areas_url}
         return url
     }
     getMapElements(type){
@@ -69,6 +71,9 @@ class BackendConnector{
         }
         if(type == "path"){
             return Path.fromJson(data)
+        }
+        if(type == "area"){
+            return Area.fromJson(data)
         }
     }
 }

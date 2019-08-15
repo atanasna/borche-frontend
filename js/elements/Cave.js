@@ -4,14 +4,6 @@ class Cave extends BasicMapElement {
         this.marker = null
         this.depth = depth
         this.lenght = lenght
-        if(approved){
-            this.iconImage = app.resourcer.icons.cave.color32
-            //this.iconImage = caveIconUrl    
-        }
-        else{
-            this.iconImage = app.resourcer.icons.cave.gray32
-            //this.iconImage = caveGrayIconUrl 
-        }
     }
 
     isValid(){

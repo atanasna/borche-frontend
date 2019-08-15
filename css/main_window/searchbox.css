@@ -25,6 +25,9 @@
     width: 40%;
 }
 
+#pac-input:focus {
+    border-color: #4d90fe;
+}
 #description {
     font-family: Museo;
     font-size: 100px;
@@ -55,24 +58,58 @@ display: inline;
 
 .pac-container {
     border-radius: 10px 10px 10px 10px;
-    padding-bottom: 0px;
-    margin-right: 0px;
+
+    background-color: #fff;
     font-family: Museo;
+    font-size: 18px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+
+    z-index: 20;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: white;
     opacity: 0.9;
+    width: 40%;
 }
+
 .pac-container:after{
     background-image: none !important;
     height: 0px;
     content:none !important;
 }
 .pac-item{
-    padding-top:5px;
-    padding-bottom:5px;
+    padding-top:13px;
+    padding-left:15px;
+    padding-right:15px;
+    padding-bottom:13px;
     font-family: Museo;
     font-size: 12px;
 }
+.pac-item:hover{
+    background-color: #fafafa;
+}
+.pac-item-first{
+    border-bottom: 1px dotted #ccc;
+    border-radius: 10px 10px 0px 0px;
+}
+.pac-item-middle{
+    border-bottom: 1px dotted #ccc;
+}
+.pac-item-last{
+    border-radius: 0px 0px 10px 10px;
+}
+.pac-item-sub{
+    color: #999;
+}
 .pac-icon{
     content:none !important;
+
 }
 .pac-item-query{
     font-size: 16px;
@@ -88,10 +125,6 @@ display: inline;
     font-weight: 300;
 }
 
-#pac-input:focus {
-    border-color: #4d90fe;
-}
-
 #title {
     color: #fff;
     background-color: #eeeeee;
@@ -101,4 +134,8 @@ display: inline;
 }
 #target {
     width: 345px;
+}
+.fas{
+    padding-right:5px;
+    color:#bbb;
 }

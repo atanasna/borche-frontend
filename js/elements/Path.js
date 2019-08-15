@@ -1,11 +1,12 @@
 class Path{
-    constructor(id, name, coordinates, color, lenght, time){
+    constructor(id, name, coordinates, color, distance, time, description){
         this.id = id
         this.name = name
         this.time = time
-        this.lenght = lenght
+        this.distance = distance
         this.coordinates = coordinates
         this.color = color
+        this.description = description
         this.polyline = null
     }
 
@@ -20,7 +21,7 @@ class Path{
             data['name'],
             coordinates,
             data['color'],
-            data['lenght'],
+            data['distance'],
             data['time'],
             data['description']) 
         return path

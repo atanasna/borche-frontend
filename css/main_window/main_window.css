@@ -39,5 +39,8 @@
 .main-title select {
     font-family: "Museo";
     font-size: 40px;
-  
+}
+.main-content{
+    max-height: 500px;
+    overflow-y: auto;
 }

@@ -7,3 +7,8 @@
 
 /* removes the shit in the bottom right corner of maps */
 .gm-style-cc { display:none; }
+
+/* removes the X in the infoBox of the MapMarkers */
+.gm-ui-hover-effect {
+    display: none !important;
+}

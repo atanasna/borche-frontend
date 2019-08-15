@@ -1,118 +1,195 @@
 class MapHandler{
-  constructor(){
-    this.map = new google.maps.Map(document.getElementById('map'), {
-        zoom:12,
-        center: {lat: 42.723943, lng: 24.985956},
-        //center: {lat: 37.772, lng: -122.214},
-        mapTypeId: 'roadmap',
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: false,
-        zoomControl: false
-    });
-    this.attachRightClickListner()
-  }
-
-  addMarker(properties){
-    var marker = new google.maps.Marker({
-      position: properties.coordinates,
-      map: this.map
-    });
-
-    //Major contains A lot of info and only apears on mouse click
-    marker.majorInfoWindow = new google.maps.InfoWindow({
-        content: properties.majorContent
+    constructor(){
+      this.map = new google.maps.Map(document.getElementById('map'), {
+          zoom:12,
+          center: {lat: 42.723943, lng: 24.985956},
+          //center: {lat: 37.772, lng: -122.214},
+          mapTypeId: 'roadmap',
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: false,
+          zoomControl: false
       });
-
-    //Minor contains less info and only apears on mouse over
-    marker.minorInfoWindow = new google.maps.InfoWindow({
-        content: properties.minorContent
-      });
-    if(properties.iconImage){
-      marker.setIcon(properties.iconImage)
+      this.geocoder = new google.maps.Geocoder
+      this.autocomplete = new google.maps.places.AutocompleteService()
+      this.attachMapRightClickListner()
+      this.attachMapLeftClickListner()
     }
 
-    //EVENTS
-      // On CLICK infobox
-        if(properties.majorContent){
-          marker.addListener('click', function(){
-            if(marker.majorInfoWindow.map == null){
-              marker.majorInfoWindow.open(this.map,marker)
-              var more_button = properties.majorContent.querySelector(".more-button")
-              more_button.addEventListener('click', function(){
-                app.showMapElement(properties.id,properties.type)
-              });
-              
-              marker.minorInfoWindow.close()
-            }
-            else{
-              marker.majorInfoWindow.close();
-            }
-          });
-        }
+    addMarker(properties){
+      var marker = new google.maps.Marker({
+        position: properties.coordinates,
+        clicked: false,
+        map: this.map,
+      });
 
-      // On HOVER infobox
-        if(properties.minorContent){
+      //Major contains A lot of info and only apears on mouse click
+      marker.majorInfoWindow = new google.maps.InfoWindow({
+          content: properties.majorContent
+        });
+
+      //Minor contains less info and only apears on mouse over
+      marker.minorInfoWindow = new google.maps.InfoWindow({
+          content: properties.minorContent
+        });
+      if(properties.icon){
+        marker.setIcon(properties.icon)
+      }
+
+      //EVENTS
+        marker.addListener('click', function(){
+          console.log(properties)
+          if (marker.clicked){
+            console.log("unclick")
+            marker.setIcon(properties.icon)
+            marker.clicked = false
+          }
+          else{
+            console.log("click")
+            marker.setIcon(properties.clickIcon)
+            marker.clicked = true
+          }
+          if(properties.majorContent){
+              if(marker.majorInfoWindow.map == null){
+                marker.majorInfoWindow.open(this.map,marker)
+                var more_button = properties.majorContent.querySelector(".more-button")
+                more_button.addEventListener('click', function(){
+                  app.showMapElement(properties.id,properties.type)
+                });
+                marker.minorInfoWindow.close()
+              }
+              else{
+                marker.majorInfoWindow.close();
+                //
+              }
+          }
+        });
+
+        // On HOVER infobox
           marker.addListener('mouseover', function() {
             if(marker.majorInfoWindow.map == null){
               marker.minorInfoWindow.open(this.map,marker)
             }
+            if (marker.clicked==false){
+              marker.setIcon(properties.hoverIcon)
+            }
           });
           marker.addListener('mouseout', function() {
             marker.minorInfoWindow.close()
+            if (marker.clicked==false){
+              marker.setIcon(properties.icon)
+            }
           });
-        }
-    return marker
-  }
+      return marker
+    }
   
-  addPolyline(properties){
-    var polyline = new google.maps.Polyline({
-      path: properties.coordinates,
-      geodesic: true,
-      strokeColor: properties.color,
-      strokeOpacity: 1.0,
-      strokeWeight: 4
-    });
+    addPolyline(properties){
+      var lineSymbol = {
+          path: 'M 0,-1 0,1',
+          strokeColor: properties.color,
+          
+          strokeOpacity: 1,
+          scale: 2.5
+        };
 
-    polyline.setMap(this.map)
-
-    polyline.majorInfoWindow = new google.maps.InfoWindow({
-      content: properties.content,
-    });
-    polyline.minorInfoWindow = new google.maps.InfoWindow({
-      content: properties.content,
-    });
-
-    if(properties.content){
-      // On CLICK infobox
-      google.maps.event.addListener(polyline, 'click', function(event) {
-        polyline.majorInfoWindow.close()
-        polyline.majorInfoWindow.setPosition(event.latLng);
-        polyline.majorInfoWindow.open(this.map)
-        polyline.minorInfoWindow.close()
+      var polyline = new google.maps.Polyline({
+        path: properties.coordinates,
+        geodesic: true,
+        strokeColor: properties.color,
+        strokeOpacity: 0,
+        strokeWeight: 20,
+        icons: [{
+            icon: lineSymbol,
+            offset: '0',
+            repeat: '15px'
+          }]
+        
       });
 
-      // On HOVER infobox
-      google.maps.event.addListener(polyline, 'mouseover', function(event){
-        if(polyline.majorInfoWindow.map == null){
-          polyline.minorInfoWindow.setPosition(event.latLng);
-          polyline.minorInfoWindow.open(this.map)
-        }
+      polyline.setMap(this.map)
+
+      polyline.majorInfoWindow = new google.maps.InfoWindow({
+        content: properties.content,
       });
-      google.maps.event.addListener(polyline, 'mouseout', function(event) {
-        polyline.minorInfoWindow.close()
+      polyline.minorInfoWindow = new google.maps.InfoWindow({
+        content: properties.content,
       });
+
+      //EVENTS
+      
+        // On CLICK infobox
+        google.maps.event.addListener(polyline, 'click', function(event) {
+          if(properties.content){
+            polyline.majorInfoWindow.close()
+            polyline.majorInfoWindow.setPosition(event.latLng);
+            polyline.majorInfoWindow.open(this.map)
+            polyline.minorInfoWindow.close()
+          }
+        });
+
+        // On HOVER infobox
+        google.maps.event.addListener(polyline, 'mouseover', function(event){
+          if(properties.content){
+            if(polyline.majorInfoWindow.map == null){
+              polyline.minorInfoWindow.setPosition(event.latLng);
+              polyline.minorInfoWindow.open(this.map)
+
+              polyline.setOptions({
+                strokeColor: "#ffffff",
+                strokeOpacity: 0.8
+              });
+            }
+          }
+        });
+
+        google.maps.event.addListener(polyline, 'mouseout', function(event) {
+          if(properties.content){
+            polyline.minorInfoWindow.close()
+            polyline.setOptions({
+                strokeColor: properties.color,
+                strokeOpacity: 0
+              });  
+          }
+        });
+      
+      return polyline
+    }
+
+    center(lat,lng){
+        this.map.setCenter(new google.maps.LatLng(lat, lng));
+    }
+
+    zoom(level){
+        this.map.setZoom(level);
+    }
+    fitBounds(bounds){
+        this.map.fitBounds(bounds);
     }
     
-    return polyline
-  }
+    // EVENTS
+    attachMapRightClickListner(){
+        google.maps.event.addListener(this.map, "rightclick", function(event) {
+            var lat = event.latLng.lat();
+            var lng = event.latLng.lng();
+            // populate yor box/field with lat, lng
+            alert("Lat=" + lat + "; Lng=" + lng);
+        });
+    }
+    attachMapLeftClickListner(){
+        var c = document.getElementById('map');
+        google.maps.event.addDomListener(c, "mousedown", function (e) {
+            if (e.which === 1) {
+                app.tools[0].predictionBox.style.display="none"
+            } 
+        });
+    }
 
-  attachRightClickListner(){
-      google.maps.event.addListener(this.map, "rightclick", function(event) {
-          var lat = event.latLng.lat();
-          var lng = event.latLng.lng();
-          // populate yor box/field with lat, lng
-          alert("Lat=" + lat + "; Lng=" + lng);
+    attachPolylineHoverListener(polyline){
+      google.maps.event.addListener(polyline, 'mouseover', function() {
+        this.setOptions({
+            strokeOpacity : 1
+        });
       });
-  }
+    }
 }
+
