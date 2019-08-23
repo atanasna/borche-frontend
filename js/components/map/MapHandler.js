@@ -2,7 +2,8 @@ class MapHandler{
     constructor(){
       this.map = new google.maps.Map(document.getElementById('map'), {
           zoom:12,
-          center: {lat: 42.777823, lng: 24.534963},
+          //center: {lat: 42.777823, lng: 24.534963}, // Staraplanina
+          center: {lat: 41.76318023413466, lng: 23.41488561130859}, //Pirin
           //center: {lat: 37.772, lng: -122.214},
           mapTypeId: 'roadmap',
           mapTypeControl: false,

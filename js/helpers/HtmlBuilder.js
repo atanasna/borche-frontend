@@ -181,18 +181,35 @@ class HtmlBuilder{
             return container
         }
         caveShow(element){
+            console.log(element)
+            var score_image_name = "star_"+(element.score-(element.score%0.5)).toString().replace(".","_")
+            console.log(score_image_name)
+            console.log(app.resourcer.score[score_image_name])
             var container = `
                 <div class="main-title">${element.name}</div>
                 <hr>
                 <div class="main-content">
-                    ${element.depth ?`
-                        depth:${element.depth}<br>` : ``
+                    <div class="w3-content w3-display-container">
+                        ${element.images.map((item, i) => `
+                            <img class="mySlides" src="${item}">
+                        `).join('')}
+                        
+                        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                    </div>
+                    <div class="elementScoreContainer">
+                        <img class="elementScoreImage" src="${app.resourcer.score[score_image_name]}">
+                    </div>
+                    <hr>
+                    <br>
+                    ${element.altitude ?`
+                        altitude:${element.altitude}<br>` : ``
                     }
-                    ${element.length ?`
-                        lenght:${element.length}<br>` : ``
+                    ${element.capacity ?`
+                        capacity:${element.capacity}<br>` : ``
                     }
-                    lat:${element.latitude},lng:${element.longitude}<br> 
-                    score:${element.score}<br>
+                    lat:${element.coordinates.lat},lng:${element.coordinates.lng}<br><br> 
+                    ${element.description}<br>
                 </div>
             `
             return container
@@ -265,15 +282,35 @@ class HtmlBuilder{
             return container
         }
         waterfallShow(element){
+            console.log(element)
+            var score_image_name = "star_"+(element.score-(element.score%0.5)).toString().replace(".","_")
+            console.log(score_image_name)
+            console.log(app.resourcer.score[score_image_name])
             var container = `
                 <div class="main-title">${element.name}</div>
                 <hr>
                 <div class="main-content">
-                    ${element.height ?`
-                        depth:${element.height}<br>` : ``
+                    <div class="w3-content w3-display-container">
+                        ${element.images.map((item, i) => `
+                            <img class="mySlides" src="${item}">
+                        `).join('')}
+                        
+                        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                    </div>
+                    <div class="elementScoreContainer">
+                        <img class="elementScoreImage" src="${app.resourcer.score[score_image_name]}">
+                    </div>
+                    <hr>
+                    <br>
+                    ${element.altitude ?`
+                        altitude:${element.altitude}<br>` : ``
                     }
-                    lat:${element.latitude},lng:${element.longitude}<br> 
-                    score:${element.score}<br>
+                    ${element.capacity ?`
+                        capacity:${element.capacity}<br>` : ``
+                    }
+                    lat:${element.coordinates.lat},lng:${element.coordinates.lng}<br><br> 
+                    ${element.description}<br>
                 </div>
             `
             return container
@@ -297,6 +334,8 @@ class HtmlBuilder{
         pathMinorInfo(path){
             var container = document.createElement('div');
             container.innerHTML = `
+                id: <b>${path.id}
+                <br>
                 ${ path.time ?`
                     time: <b>${Math.floor(path.time/60)}h ${path.time%60}m</b>` : ``
                 }
